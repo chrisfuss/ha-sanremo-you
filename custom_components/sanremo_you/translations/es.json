@@ -33,12 +33,39 @@
       "water_tank": { "name": "Depósito de agua" }
     },
     "switch": {
-      "power": { "name": "Encendido/Apagado" }
+      "power": { "name": "Encendido/Apagado" },
+      "scheduler": { "name": "Programador" },
+      "scheduler_slot_1_enabled": { "name": "Franja 1 Activada" },
+      "scheduler_slot_2_enabled": { "name": "Franja 2 Activada" },
+      "scheduler_slot_3_enabled": { "name": "Franja 3 Activada" },
+      "scheduler_slot_4_enabled": { "name": "Franja 4 Activada" },
+      "scheduler_slot_5_enabled": { "name": "Franja 5 Activada" },
+      "scheduler_slot_6_enabled": { "name": "Franja 6 Activada" },
+      "scheduler_slot_1_eco": { "name": "Franja 1 Modo Eco" },
+      "scheduler_slot_2_eco": { "name": "Franja 2 Modo Eco" },
+      "scheduler_slot_3_eco": { "name": "Franja 3 Modo Eco" },
+      "scheduler_slot_4_eco": { "name": "Franja 4 Modo Eco" },
+      "scheduler_slot_5_eco": { "name": "Franja 5 Modo Eco" },
+      "scheduler_slot_6_eco": { "name": "Franja 6 Modo Eco" }
     },
     "number": {
       "coffee_boiler_setpoint": { "name": "Consigna caldera de café" },
       "group_temp_setpoint": { "name": "Consigna temperatura del grupo" },
       "steam_pressure_setpoint": { "name": "Consigna presión de vapor" }
+    },
+    "time": {
+      "scheduler_slot_1_start": { "name": "Franja 1 Hora de inicio" },
+      "scheduler_slot_1_stop": { "name": "Franja 1 Hora de fin" },
+      "scheduler_slot_2_start": { "name": "Franja 2 Hora de inicio" },
+      "scheduler_slot_2_stop": { "name": "Franja 2 Hora de fin" },
+      "scheduler_slot_3_start": { "name": "Franja 3 Hora de inicio" },
+      "scheduler_slot_3_stop": { "name": "Franja 3 Hora de fin" },
+      "scheduler_slot_4_start": { "name": "Franja 4 Hora de inicio" },
+      "scheduler_slot_4_stop": { "name": "Franja 4 Hora de fin" },
+      "scheduler_slot_5_start": { "name": "Franja 5 Hora de inicio" },
+      "scheduler_slot_5_stop": { "name": "Franja 5 Hora de fin" },
+      "scheduler_slot_6_start": { "name": "Franja 6 Hora de inicio" },
+      "scheduler_slot_6_stop": { "name": "Franja 6 Hora de fin" }
     }
   }
 }

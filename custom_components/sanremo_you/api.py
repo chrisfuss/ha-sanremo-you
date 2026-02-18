@@ -12,9 +12,13 @@ import aiohttp
 from .const import (
     API_KEY_GET_DEVICE_INFO,
     API_KEY_GET_SYSTEM_PARAMS,
+    API_KEY_SAVE_SCHEDULER_DAY,
+    API_KEY_SET_SCHEDULER_DAY_STATUS,
+    API_KEY_SET_SCHEDULER_STATUS,
     API_KEY_SET_VALUE,
     API_PATH,
     ALARM_BITS,
+    DAY_ECO_BIT,
     MACHINE_STATUS_MAP,
     MACHINE_STATUS_OFF,
     MACHINE_STATUS_ON,
@@ -23,6 +27,10 @@ from .const import (
     PARAM_POWER_OFF,
     PARAM_POWER_ON,
     PARAM_STEAM_BOILER_PRESSURE,
+    SCHEDULER_IDX_DAYS_START,
+    SCHEDULER_IDX_ENABLED,
+    SCHEDULER_IDX_TIMES_START,
+    SCHEDULER_NUM_SLOTS,
     SETTINGS_IDX_FILTER_HOLDER_TEMP_SETPOINT,
     SETTINGS_IDX_GROUP_TEMP_SETPOINT,
     SETTINGS_IDX_PRESSURE_STEAM_SETPOINT,
@@ -81,6 +89,9 @@ class SanremoYouData:
     ip_address: str = ""
     mac_address: str = ""
 
+    # Scheduler
+    scheduler: SchedulerData | None = None
+
     # Connectivity
     is_available: bool = False
 
@@ -95,6 +106,66 @@ class SanremoYouDeviceInfo:
     mac_address: str = ""
     ssid: str = ""
     signal: int = 0
+
+
+@dataclass
+class SchedulerSlot:
+    """A single scheduler time slot."""
+
+    slot_id: int = 0
+    enabled: bool = False
+    on_hour: int = 0
+    on_minute: int = 0
+    off_hour: int = 0
+    off_minute: int = 0
+    eco_mode: bool = False
+    days: list[bool] = field(default_factory=lambda: [False] * 7)  # Mon-Sun
+
+
+@dataclass
+class SchedulerData:
+    """Scheduler configuration data."""
+
+    enabled: bool = False
+    slots: list[SchedulerSlot] = field(default_factory=lambda: [SchedulerSlot(slot_id=i) for i in range(SCHEDULER_NUM_SLOTS)])
+
+
+def _parse_scheduler(scheduler_array: list[int]) -> SchedulerData:
+    """Parse the scheduler array from key 150 response."""
+    data = SchedulerData()
+
+    if len(scheduler_array) < 17:
+        return data
+
+    data.enabled = bool(scheduler_array[SCHEDULER_IDX_ENABLED])
+
+    for slot_idx in range(SCHEDULER_NUM_SLOTS):
+        slot = SchedulerSlot(slot_id=slot_idx)
+
+        # Parse ON/OFF times
+        on_raw = scheduler_array[SCHEDULER_IDX_TIMES_START + slot_idx * 2]
+        off_raw = scheduler_array[SCHEDULER_IDX_TIMES_START + slot_idx * 2 + 1]
+        slot.on_hour = (on_raw >> 8) & 0xFF
+        slot.on_minute = on_raw & 0xFF
+        slot.off_hour = (off_raw >> 8) & 0xFF
+        slot.off_minute = off_raw & 0xFF
+
+        # Parse days + eco from packed byte
+        days_raw = scheduler_array[SCHEDULER_IDX_DAYS_START + slot_idx // 2]
+        if slot_idx % 2 == 1:
+            days_raw = (days_raw >> 8) & 0xFF
+        else:
+            days_raw = days_raw & 0xFF
+
+        slot.days = [bool(days_raw & (1 << i)) for i in range(7)]
+        slot.eco_mode = bool(days_raw & (1 << DAY_ECO_BIT))
+
+        # A slot is considered "enabled" if it has any day selected
+        slot.enabled = any(slot.days)
+
+        data.slots[slot_idx] = slot
+
+    return data
 
 
 def _decode_alarms(code: int, bit_map: dict[int, str]) -> str:
@@ -183,6 +254,11 @@ class SanremoYouApi:
             data.setpoint_filter_holder_temp = settings[SETTINGS_IDX_FILTER_HOLDER_TEMP_SETPOINT] / 10
             data.setpoint_pressure_steam = settings[SETTINGS_IDX_PRESSURE_STEAM_SETPOINT] / 10
 
+        # Parse scheduler
+        scheduler_array = result.get("scheduler", [])
+        if scheduler_array:
+            data.scheduler = _parse_scheduler(scheduler_array)
+
         # Parse counters
         data.daily_coffee = result.get("dailyCoffee", 0)
 
@@ -224,6 +300,52 @@ class SanremoYouApi:
     async def set_steam_pressure(self, pressure_bar: float) -> bool:
         """Set steam boiler pressure setpoint."""
         return await self.set_value(PARAM_STEAM_BOILER_PRESSURE, int(pressure_bar * 10))
+
+    async def set_scheduler_enabled(self, enabled: bool) -> bool:
+        """Enable or disable the scheduler (key 252)."""
+        try:
+            result = await self._post({
+                "key": API_KEY_SET_SCHEDULER_STATUS,
+                "enabled": "1" if enabled else "0",
+            })
+            return result.get("result", False)
+        except (aiohttp.ClientError, asyncio.TimeoutError):
+            return False
+
+    async def set_slot_enabled(self, slot: int, enabled: bool) -> bool:
+        """Enable or disable a single scheduler slot (key 250)."""
+        try:
+            result = await self._post({
+                "key": API_KEY_SET_SCHEDULER_DAY_STATUS,
+                "day": str(slot),
+                "enabled": "1" if enabled else "0",
+            })
+            return result.get("result", False)
+        except (aiohttp.ClientError, asyncio.TimeoutError):
+            return False
+
+    async def save_scheduler_slot(self, slot: SchedulerSlot) -> bool:
+        """Save a complete scheduler slot configuration (key 253)."""
+        try:
+            result = await self._post({
+                "key": API_KEY_SAVE_SCHEDULER_DAY,
+                "slot": str(slot.slot_id),
+                "onH": str(slot.on_hour),
+                "onM": str(slot.on_minute),
+                "offH": str(slot.off_hour),
+                "offM": str(slot.off_minute),
+                "ecoOn": "1" if slot.eco_mode else "0",
+                "onMon": "1" if slot.days[0] else "0",
+                "onTue": "1" if slot.days[1] else "0",
+                "onWed": "1" if slot.days[2] else "0",
+                "onThu": "1" if slot.days[3] else "0",
+                "onFri": "1" if slot.days[4] else "0",
+                "onSat": "1" if slot.days[5] else "0",
+                "onSun": "1" if slot.days[6] else "0",
+            })
+            return result.get("result", False)
+        except (aiohttp.ClientError, asyncio.TimeoutError):
+            return False
 
     async def test_connection(self) -> bool:
         """Test if the machine is reachable."""

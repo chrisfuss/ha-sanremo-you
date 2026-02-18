@@ -13,7 +13,10 @@ API_KEY_GET_DEVICE_INFO = "105"
 API_KEY_GET_SYSTEM_PARAMS = "150"
 API_KEY_SET_VALUE = "200"
 API_KEY_SET_CLOCK = "249"
+API_KEY_SET_SCHEDULER_DAY_STATUS = "250"
 API_KEY_SET_MACHINE_NAME = "251"
+API_KEY_SET_SCHEDULER_STATUS = "252"
+API_KEY_SAVE_SCHEDULER_DAY = "253"
 
 # SetValue parameter IDs
 PARAM_COFFEE_BOILER_TEMP = 1
@@ -84,3 +87,19 @@ WARNING_BITS = {
     7: "Machine locked",
     8: "Low boiler level",
 }
+
+# Scheduler constants
+SCHEDULER_NUM_SLOTS = 6
+SCHEDULER_IDX_ENABLED = 1
+SCHEDULER_IDX_TIMES_START = 2  # scheduler[2 + slot*2] = ON, scheduler[3 + slot*2] = OFF
+SCHEDULER_IDX_DAYS_START = 14  # scheduler[14 + slot//2], packed per pair
+
+# Day-of-week bit positions (in days+eco byte)
+DAY_MONDAY = 0
+DAY_TUESDAY = 1
+DAY_WEDNESDAY = 2
+DAY_THURSDAY = 3
+DAY_FRIDAY = 4
+DAY_SATURDAY = 5
+DAY_SUNDAY = 6
+DAY_ECO_BIT = 7

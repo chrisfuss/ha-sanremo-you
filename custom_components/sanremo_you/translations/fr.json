@@ -33,12 +33,39 @@
       "water_tank": { "name": "Réservoir d'eau" }
     },
     "switch": {
-      "power": { "name": "Marche/Arrêt" }
+      "power": { "name": "Marche/Arrêt" },
+      "scheduler": { "name": "Programmateur" },
+      "scheduler_slot_1_enabled": { "name": "Créneau 1 Activé" },
+      "scheduler_slot_2_enabled": { "name": "Créneau 2 Activé" },
+      "scheduler_slot_3_enabled": { "name": "Créneau 3 Activé" },
+      "scheduler_slot_4_enabled": { "name": "Créneau 4 Activé" },
+      "scheduler_slot_5_enabled": { "name": "Créneau 5 Activé" },
+      "scheduler_slot_6_enabled": { "name": "Créneau 6 Activé" },
+      "scheduler_slot_1_eco": { "name": "Créneau 1 Mode Éco" },
+      "scheduler_slot_2_eco": { "name": "Créneau 2 Mode Éco" },
+      "scheduler_slot_3_eco": { "name": "Créneau 3 Mode Éco" },
+      "scheduler_slot_4_eco": { "name": "Créneau 4 Mode Éco" },
+      "scheduler_slot_5_eco": { "name": "Créneau 5 Mode Éco" },
+      "scheduler_slot_6_eco": { "name": "Créneau 6 Mode Éco" }
     },
     "number": {
       "coffee_boiler_setpoint": { "name": "Consigne chaudière café" },
       "group_temp_setpoint": { "name": "Consigne température groupe" },
       "steam_pressure_setpoint": { "name": "Consigne pression vapeur" }
+    },
+    "time": {
+      "scheduler_slot_1_start": { "name": "Créneau 1 Heure de début" },
+      "scheduler_slot_1_stop": { "name": "Créneau 1 Heure de fin" },
+      "scheduler_slot_2_start": { "name": "Créneau 2 Heure de début" },
+      "scheduler_slot_2_stop": { "name": "Créneau 2 Heure de fin" },
+      "scheduler_slot_3_start": { "name": "Créneau 3 Heure de début" },
+      "scheduler_slot_3_stop": { "name": "Créneau 3 Heure de fin" },
+      "scheduler_slot_4_start": { "name": "Créneau 4 Heure de début" },
+      "scheduler_slot_4_stop": { "name": "Créneau 4 Heure de fin" },
+      "scheduler_slot_5_start": { "name": "Créneau 5 Heure de début" },
+      "scheduler_slot_5_stop": { "name": "Créneau 5 Heure de fin" },
+      "scheduler_slot_6_start": { "name": "Créneau 6 Heure de début" },
+      "scheduler_slot_6_stop": { "name": "Créneau 6 Heure de fin" }
     }
   }
 }

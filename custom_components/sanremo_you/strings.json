@@ -16,5 +16,56 @@
     "abort": {
       "already_configured": "This machine is already configured"
     }
+  },
+  "entity": {
+    "sensor": {
+      "group_temperature": { "name": "Group Temperature" },
+      "heater_temperature": { "name": "Coffee Boiler Temperature" },
+      "steam_boiler_pressure": { "name": "Steam Boiler Pressure" },
+      "pump_pressure": { "name": "Pump Pressure" },
+      "extraction_time": { "name": "Extraction Time" },
+      "daily_shots": { "name": "Daily Shot Count" },
+      "machine_status": { "name": "Machine Status" },
+      "alarms": { "name": "Alarms" },
+      "warnings": { "name": "Warnings" }
+    },
+    "binary_sensor": {
+      "water_tank": { "name": "Water Tank" }
+    },
+    "switch": {
+      "power": { "name": "Power" },
+      "scheduler": { "name": "Scheduler" },
+      "scheduler_slot_1_enabled": { "name": "Slot 1 Enabled" },
+      "scheduler_slot_2_enabled": { "name": "Slot 2 Enabled" },
+      "scheduler_slot_3_enabled": { "name": "Slot 3 Enabled" },
+      "scheduler_slot_4_enabled": { "name": "Slot 4 Enabled" },
+      "scheduler_slot_5_enabled": { "name": "Slot 5 Enabled" },
+      "scheduler_slot_6_enabled": { "name": "Slot 6 Enabled" },
+      "scheduler_slot_1_eco": { "name": "Slot 1 Eco Mode" },
+      "scheduler_slot_2_eco": { "name": "Slot 2 Eco Mode" },
+      "scheduler_slot_3_eco": { "name": "Slot 3 Eco Mode" },
+      "scheduler_slot_4_eco": { "name": "Slot 4 Eco Mode" },
+      "scheduler_slot_5_eco": { "name": "Slot 5 Eco Mode" },
+      "scheduler_slot_6_eco": { "name": "Slot 6 Eco Mode" }
+    },
+    "number": {
+      "coffee_boiler_setpoint": { "name": "Coffee Boiler Setpoint" },
+      "group_temp_setpoint": { "name": "Group Temperature Setpoint" },
+      "steam_pressure_setpoint": { "name": "Steam Pressure Setpoint" }
+    },
+    "time": {
+      "scheduler_slot_1_start": { "name": "Slot 1 Start Time" },
+      "scheduler_slot_1_stop": { "name": "Slot 1 Stop Time" },
+      "scheduler_slot_2_start": { "name": "Slot 2 Start Time" },
+      "scheduler_slot_2_stop": { "name": "Slot 2 Stop Time" },
+      "scheduler_slot_3_start": { "name": "Slot 3 Start Time" },
+      "scheduler_slot_3_stop": { "name": "Slot 3 Stop Time" },
+      "scheduler_slot_4_start": { "name": "Slot 4 Start Time" },
+      "scheduler_slot_4_stop": { "name": "Slot 4 Stop Time" },
+      "scheduler_slot_5_start": { "name": "Slot 5 Start Time" },
+      "scheduler_slot_5_stop": { "name": "Slot 5 Stop Time" },
+      "scheduler_slot_6_start": { "name": "Slot 6 Start Time" },
+      "scheduler_slot_6_stop": { "name": "Slot 6 Stop Time" }
+    }
   }
 }
