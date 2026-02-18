@@ -1,0 +1,44 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Máquina de café Sanremo YOU",
+        "description": "Introduce la dirección IP de tu máquina de café Sanremo YOU.",
+        "data": {
+          "host": "Dirección IP"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "No se pudo conectar con la Sanremo YOU. Verifica la dirección IP y la conexión Wi-Fi de la máquina.",
+      "unknown": "Error inesperado"
+    },
+    "abort": {
+      "already_configured": "Esta máquina ya está configurada"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "group_temperature": { "name": "Temperatura del grupo" },
+      "heater_temperature": { "name": "Temperatura de la caldera de café" },
+      "steam_boiler_pressure": { "name": "Presión de la caldera de vapor" },
+      "pump_pressure": { "name": "Presión de la bomba" },
+      "extraction_time": { "name": "Tiempo de extracción" },
+      "daily_shots": { "name": "Cafés del día" },
+      "machine_status": { "name": "Estado de la máquina" },
+      "alarms": { "name": "Alarmas" },
+      "warnings": { "name": "Advertencias" }
+    },
+    "binary_sensor": {
+      "water_tank": { "name": "Depósito de agua" }
+    },
+    "switch": {
+      "power": { "name": "Encendido/Apagado" }
+    },
+    "number": {
+      "coffee_boiler_setpoint": { "name": "Consigna caldera de café" },
+      "group_temp_setpoint": { "name": "Consigna temperatura del grupo" },
+      "steam_pressure_setpoint": { "name": "Consigna presión de vapor" }
+    }
+  }
+}

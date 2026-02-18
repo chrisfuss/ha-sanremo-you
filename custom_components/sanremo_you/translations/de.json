@@ -1,0 +1,44 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Sanremo YOU Kaffeemaschine",
+        "description": "Geben Sie die IP-Adresse Ihrer Sanremo YOU Kaffeemaschine ein.",
+        "data": {
+          "host": "IP-Adresse"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbindung zur Sanremo YOU fehlgeschlagen. Bitte IP-Adresse und WLAN-Verbindung der Maschine prüfen.",
+      "unknown": "Unerwarteter Fehler"
+    },
+    "abort": {
+      "already_configured": "Diese Maschine ist bereits konfiguriert"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "group_temperature": { "name": "Brühgruppentemperatur" },
+      "heater_temperature": { "name": "Kaffeeboilertemperatur" },
+      "steam_boiler_pressure": { "name": "Dampfkesseldruck" },
+      "pump_pressure": { "name": "Pumpendruck" },
+      "extraction_time": { "name": "Extraktionszeit" },
+      "daily_shots": { "name": "Tägliche Bezüge" },
+      "machine_status": { "name": "Maschinenstatus" },
+      "alarms": { "name": "Alarme" },
+      "warnings": { "name": "Warnungen" }
+    },
+    "binary_sensor": {
+      "water_tank": { "name": "Wassertank" }
+    },
+    "switch": {
+      "power": { "name": "Ein/Aus" }
+    },
+    "number": {
+      "coffee_boiler_setpoint": { "name": "Kaffeeboiler Sollwert" },
+      "group_temp_setpoint": { "name": "Brühgruppe Sollwert" },
+      "steam_pressure_setpoint": { "name": "Dampfdruck Sollwert" }
+    }
+  }
+}
