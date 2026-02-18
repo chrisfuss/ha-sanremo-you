@@ -3,6 +3,7 @@
   "name": "Sanremo YOU Coffee Machine",
   "codeowners": ["@chrisfuss"],
   "config_flow": true,
+  "dependencies": ["frontend", "http"],
   "documentation": "https://github.com/chrisfuss/ha-sanremo-you",
   "integration_type": "device",
   "iot_class": "local_polling",

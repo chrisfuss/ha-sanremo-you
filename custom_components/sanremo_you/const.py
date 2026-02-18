@@ -1,7 +1,19 @@
 """Constants for the Sanremo YOU integration."""
 
-DOMAIN = "sanremo_you"
+from typing import Final
+
+DOMAIN: Final[str] = "sanremo_you"
 CONF_HOST = "host"
+
+# Frontend card serving
+URL_BASE: Final[str] = "/sanremo_you"
+JSMODULES: Final[list[dict[str, str]]] = [
+    {
+        "name": "Sanremo YOU Card",
+        "filename": "sanremo-you-card.js",
+        "version": "1.0.0",
+    },
+]
 DEFAULT_PORT = 80
 SCAN_INTERVAL_SECONDS = 5
 
