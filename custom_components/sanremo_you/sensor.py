@@ -1,0 +1,152 @@
+"""Sensor entities for the Sanremo YOU integration."""
+
+from __future__ import annotations
+
+from collections.abc import Callable
+from dataclasses import dataclass
+
+from homeassistant.components.sensor import (
+    SensorDeviceClass,
+    SensorEntity,
+    SensorEntityDescription,
+    SensorStateClass,
+)
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import UnitOfPressure, UnitOfTemperature, UnitOfTime
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+
+from .api import SanremoYouData
+from .const import DOMAIN
+from .coordinator import SanremoYouCoordinator
+from .entity import SanremoYouEntity
+
+
+@dataclass(frozen=True, kw_only=True)
+class SanremoYouSensorDescription(SensorEntityDescription):
+    """Sensor entity description for Sanremo YOU."""
+
+    value_fn: Callable[[SanremoYouData], float | int | str | None]
+
+
+SENSOR_DESCRIPTIONS: tuple[SanremoYouSensorDescription, ...] = (
+    SanremoYouSensorDescription(
+        key="group_temperature",
+        translation_key="group_temperature",
+        name="Group Temperature",
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        device_class=SensorDeviceClass.TEMPERATURE,
+        state_class=SensorStateClass.MEASUREMENT,
+        suggested_display_precision=1,
+        icon="mdi:coffee",
+        value_fn=lambda d: d.group_temperature,
+    ),
+    SanremoYouSensorDescription(
+        key="heater_temperature",
+        translation_key="heater_temperature",
+        name="Coffee Boiler Temperature",
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        device_class=SensorDeviceClass.TEMPERATURE,
+        state_class=SensorStateClass.MEASUREMENT,
+        suggested_display_precision=1,
+        icon="mdi:thermometer",
+        value_fn=lambda d: d.heater_temperature,
+    ),
+    SanremoYouSensorDescription(
+        key="steam_boiler_pressure",
+        translation_key="steam_boiler_pressure",
+        name="Steam Boiler Pressure",
+        native_unit_of_measurement=UnitOfPressure.BAR,
+        device_class=SensorDeviceClass.PRESSURE,
+        state_class=SensorStateClass.MEASUREMENT,
+        suggested_display_precision=1,
+        icon="mdi:gauge",
+        value_fn=lambda d: d.service_heater_pressure,
+    ),
+    SanremoYouSensorDescription(
+        key="pump_pressure",
+        translation_key="pump_pressure",
+        name="Pump Pressure",
+        native_unit_of_measurement=UnitOfPressure.BAR,
+        device_class=SensorDeviceClass.PRESSURE,
+        state_class=SensorStateClass.MEASUREMENT,
+        suggested_display_precision=1,
+        icon="mdi:gauge-full",
+        value_fn=lambda d: d.pump_pressure,
+    ),
+    SanremoYouSensorDescription(
+        key="extraction_time",
+        translation_key="extraction_time",
+        name="Extraction Time",
+        native_unit_of_measurement=UnitOfTime.SECONDS,
+        device_class=SensorDeviceClass.DURATION,
+        state_class=SensorStateClass.MEASUREMENT,
+        suggested_display_precision=1,
+        icon="mdi:timer-outline",
+        value_fn=lambda d: d.dose_time,
+    ),
+    SanremoYouSensorDescription(
+        key="daily_shots",
+        translation_key="daily_shots",
+        name="Daily Shot Count",
+        state_class=SensorStateClass.TOTAL,
+        icon="mdi:counter",
+        value_fn=lambda d: d.daily_coffee,
+    ),
+    SanremoYouSensorDescription(
+        key="machine_status",
+        translation_key="machine_status",
+        name="Machine Status",
+        icon="mdi:state-machine",
+        value_fn=lambda d: d.machine_status_label,
+    ),
+    SanremoYouSensorDescription(
+        key="alarms",
+        translation_key="alarms",
+        name="Alarms",
+        icon="mdi:alert-circle-outline",
+        value_fn=lambda d: d.alarms_text,
+    ),
+    SanremoYouSensorDescription(
+        key="warnings",
+        translation_key="warnings",
+        name="Warnings",
+        icon="mdi:alert-outline",
+        value_fn=lambda d: d.warnings_text,
+    ),
+)
+
+
+async def async_setup_entry(
+    hass: HomeAssistant,
+    entry: ConfigEntry,
+    async_add_entities: AddEntitiesCallback,
+) -> None:
+    """Set up sensor entities."""
+    coordinator: SanremoYouCoordinator = hass.data[DOMAIN][entry.entry_id]
+    async_add_entities(
+        SanremoYouSensor(coordinator, entry.entry_id, description)
+        for description in SENSOR_DESCRIPTIONS
+    )
+
+
+class SanremoYouSensor(SanremoYouEntity, SensorEntity):
+    """Sensor entity for Sanremo YOU."""
+
+    entity_description: SanremoYouSensorDescription
+
+    def __init__(
+        self,
+        coordinator: SanremoYouCoordinator,
+        entry_id: str,
+        description: SanremoYouSensorDescription,
+    ) -> None:
+        """Initialize the sensor."""
+        super().__init__(coordinator, entry_id)
+        self.entity_description = description
+        self._attr_unique_id = f"{entry_id}_{description.key}"
+
+    @property
+    def native_value(self) -> float | int | str | None:
+        """Return the sensor value."""
+        return self.entity_description.value_fn(self.coordinator.data)

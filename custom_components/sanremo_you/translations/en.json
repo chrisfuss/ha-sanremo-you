@@ -1,0 +1,44 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Sanremo YOU Coffee Machine",
+        "description": "Enter the IP address of your Sanremo YOU coffee machine.",
+        "data": {
+          "host": "IP Address"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to the Sanremo YOU. Check the IP address and ensure the machine is on and connected to Wi-Fi.",
+      "unknown": "Unexpected error"
+    },
+    "abort": {
+      "already_configured": "This machine is already configured"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "group_temperature": { "name": "Group Temperature" },
+      "heater_temperature": { "name": "Coffee Boiler Temperature" },
+      "steam_boiler_pressure": { "name": "Steam Boiler Pressure" },
+      "pump_pressure": { "name": "Pump Pressure" },
+      "extraction_time": { "name": "Extraction Time" },
+      "daily_shots": { "name": "Daily Shot Count" },
+      "machine_status": { "name": "Machine Status" },
+      "alarms": { "name": "Alarms" },
+      "warnings": { "name": "Warnings" }
+    },
+    "binary_sensor": {
+      "water_tank": { "name": "Water Tank" }
+    },
+    "switch": {
+      "power": { "name": "Power" }
+    },
+    "number": {
+      "coffee_boiler_setpoint": { "name": "Coffee Boiler Setpoint" },
+      "group_temp_setpoint": { "name": "Group Temperature Setpoint" },
+      "steam_pressure_setpoint": { "name": "Steam Pressure Setpoint" }
+    }
+  }
+}

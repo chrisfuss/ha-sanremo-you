@@ -1,0 +1,11 @@
+{
+  "domain": "sanremo_you",
+  "name": "Sanremo YOU Coffee Machine",
+  "codeowners": [],
+  "config_flow": true,
+  "documentation": "https://github.com/yourusername/ha-sanremo-you",
+  "iot_class": "local_polling",
+  "version": "1.0.0",
+  "requirements": ["aiohttp>=3.8.0"],
+  "integration_type": "device"
+}
