@@ -1,9 +1,10 @@
 {
   "domain": "sanremo_you",
   "name": "Sanremo YOU Coffee Machine",
-  "codeowners": [],
+  "codeowners": ["@chrisfuss"],
   "config_flow": true,
-  "documentation": "https://github.com/yourusername/ha-sanremo-you",
+  "documentation": "https://github.com/chrisfuss/ha-sanremo-you",
+  "issue_tracker": "https://github.com/chrisfuss/ha-sanremo-you/issues",
   "iot_class": "local_polling",
   "version": "1.0.0",
   "requirements": ["aiohttp>=3.8.0"],
