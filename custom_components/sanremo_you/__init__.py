@@ -21,6 +21,7 @@ PLATFORMS: list[Platform] = [
     Platform.SWITCH,
     Platform.NUMBER,
     Platform.TIME,
+    Platform.BUTTON,
 ]
 
 type SanremoYouConfigEntry = ConfigEntry

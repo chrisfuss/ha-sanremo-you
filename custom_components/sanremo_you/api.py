@@ -13,6 +13,7 @@ from .const import (
     API_KEY_GET_DEVICE_INFO,
     API_KEY_GET_SYSTEM_PARAMS,
     API_KEY_SAVE_SCHEDULER_DAY,
+    API_KEY_SET_CLOCK,
     API_KEY_SET_SCHEDULER_DAY_STATUS,
     API_KEY_SET_SCHEDULER_STATUS,
     API_KEY_SET_VALUE,
@@ -74,6 +75,13 @@ class SanremoYouData:
 
     # Counters
     daily_coffee: int = 0
+    counter_dose_1: int = 0
+    counter_dose_2: int = 0
+    counter_dose_3: int = 0
+    counter_continuous: int = 0
+    counter_paddle: int = 0
+    counter_steam: int = 0
+    counter_tea: int = 0
 
     # Settings (setpoints)
     setpoint_steam_heater: float = 0.0
@@ -261,6 +269,15 @@ class SanremoYouApi:
 
         # Parse counters
         data.daily_coffee = result.get("dailyCoffee", 0)
+        counters = result.get("counters", [])
+        if len(counters) >= 14:
+            data.counter_dose_1 = (counters[0] << 16) | counters[1]
+            data.counter_dose_2 = (counters[2] << 16) | counters[3]
+            data.counter_dose_3 = (counters[4] << 16) | counters[5]
+            data.counter_continuous = (counters[6] << 16) | counters[7]
+            data.counter_paddle = (counters[8] << 16) | counters[9]
+            data.counter_steam = (counters[10] << 16) | counters[11]
+            data.counter_tea = (counters[12] << 16) | counters[13]
 
         # Parse device info from this response
         data.machine_name = result.get("name", "SANREMO-YOU")
@@ -342,6 +359,21 @@ class SanremoYouApi:
                 "onFri": "1" if slot.days[4] else "0",
                 "onSat": "1" if slot.days[5] else "0",
                 "onSun": "1" if slot.days[6] else "0",
+            })
+            return result.get("result", False)
+        except (aiohttp.ClientError, asyncio.TimeoutError):
+            return False
+
+    async def set_clock(self, hour: int, minute: int, day: int, month: int, year: int) -> bool:
+        """Set the machine clock (key 249)."""
+        try:
+            result = await self._post({
+                "key": API_KEY_SET_CLOCK,
+                "hh": str(hour),
+                "mm": str(minute),
+                "DD": str(day),
+                "MM": str(month),
+                "YY": str(year % 100),  # Last 2 digits
             })
             return result.get("result", False)
         except (aiohttp.ClientError, asyncio.TimeoutError):

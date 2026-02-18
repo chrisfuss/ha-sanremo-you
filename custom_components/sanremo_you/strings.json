@@ -27,7 +27,14 @@
       "daily_shots": { "name": "Daily Shot Count" },
       "machine_status": { "name": "Machine Status" },
       "alarms": { "name": "Alarms" },
-      "warnings": { "name": "Warnings" }
+      "warnings": { "name": "Warnings" },
+      "counter_dose_1": { "name": "Dose 1 Counter" },
+      "counter_dose_2": { "name": "Dose 2 Counter" },
+      "counter_dose_3": { "name": "Dose 3 Counter" },
+      "counter_continuous": { "name": "Continuous Counter" },
+      "counter_paddle": { "name": "Paddle Counter" },
+      "counter_steam": { "name": "Steam Activation Counter" },
+      "counter_tea": { "name": "Tea Counter" }
     },
     "binary_sensor": {
       "water_tank": { "name": "Water Tank" }
@@ -66,6 +73,9 @@
       "scheduler_slot_5_stop": { "name": "Slot 5 Stop Time" },
       "scheduler_slot_6_start": { "name": "Slot 6 Start Time" },
       "scheduler_slot_6_stop": { "name": "Slot 6 Stop Time" }
+    },
+    "button": {
+      "sync_clock": { "name": "Sync Clock" }
     }
   }
 }

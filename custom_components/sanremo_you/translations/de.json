@@ -27,7 +27,14 @@
       "daily_shots": { "name": "Tägliche Bezüge" },
       "machine_status": { "name": "Maschinenstatus" },
       "alarms": { "name": "Alarme" },
-      "warnings": { "name": "Warnungen" }
+      "warnings": { "name": "Warnungen" },
+      "counter_dose_1": { "name": "Dosis 1 Zähler" },
+      "counter_dose_2": { "name": "Dosis 2 Zähler" },
+      "counter_dose_3": { "name": "Dosis 3 Zähler" },
+      "counter_continuous": { "name": "Dauerbezug Zähler" },
+      "counter_paddle": { "name": "Hebel Zähler" },
+      "counter_steam": { "name": "Dampf Zähler" },
+      "counter_tea": { "name": "Tee Zähler" }
     },
     "binary_sensor": {
       "water_tank": { "name": "Wassertank" }
@@ -66,6 +73,9 @@
       "scheduler_slot_5_stop": { "name": "Zeitfenster 5 Stoppzeit" },
       "scheduler_slot_6_start": { "name": "Zeitfenster 6 Startzeit" },
       "scheduler_slot_6_stop": { "name": "Zeitfenster 6 Stoppzeit" }
+    },
+    "button": {
+      "sync_clock": { "name": "Uhr synchronisieren" }
     }
   }
 }

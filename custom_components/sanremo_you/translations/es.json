@@ -27,7 +27,14 @@
       "daily_shots": { "name": "Cafés del día" },
       "machine_status": { "name": "Estado de la máquina" },
       "alarms": { "name": "Alarmas" },
-      "warnings": { "name": "Advertencias" }
+      "warnings": { "name": "Advertencias" },
+      "counter_dose_1": { "name": "Contador Dosis 1" },
+      "counter_dose_2": { "name": "Contador Dosis 2" },
+      "counter_dose_3": { "name": "Contador Dosis 3" },
+      "counter_continuous": { "name": "Contador Continuo" },
+      "counter_paddle": { "name": "Contador Palanca" },
+      "counter_steam": { "name": "Contador Vapor" },
+      "counter_tea": { "name": "Contador Té" }
     },
     "binary_sensor": {
       "water_tank": { "name": "Depósito de agua" }
@@ -66,6 +73,9 @@
       "scheduler_slot_5_stop": { "name": "Franja 5 Hora de fin" },
       "scheduler_slot_6_start": { "name": "Franja 6 Hora de inicio" },
       "scheduler_slot_6_stop": { "name": "Franja 6 Hora de fin" }
+    },
+    "button": {
+      "sync_clock": { "name": "Sincronizar reloj" }
     }
   }
 }
