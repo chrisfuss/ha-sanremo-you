@@ -14,6 +14,7 @@ from homeassistant.components.sensor import (
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import UnitOfPressure, UnitOfTemperature, UnitOfTime
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .api import SanremoYouData
@@ -169,6 +170,50 @@ SENSOR_DESCRIPTIONS: tuple[SanremoYouSensorDescription, ...] = (
         state_class=SensorStateClass.TOTAL_INCREASING,
         icon="mdi:tea",
         value_fn=lambda d: d.counter_tea,
+    ),
+    # ── Diagnostic (network/device) sensors ──
+    SanremoYouSensorDescription(
+        key="wifi_ssid",
+        translation_key="wifi_ssid",
+        name="WiFi SSID",
+        icon="mdi:wifi",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda d: d.wifi_ssid or None,
+    ),
+    SanremoYouSensorDescription(
+        key="wifi_signal",
+        translation_key="wifi_signal",
+        name="WiFi Signal",
+        icon="mdi:wifi-strength-3",
+        state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.SIGNAL_STRENGTH,
+        native_unit_of_measurement="dBm",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda d: d.wifi_signal if d.wifi_signal else None,
+    ),
+    SanremoYouSensorDescription(
+        key="ip_address",
+        translation_key="ip_address",
+        name="IP Address",
+        icon="mdi:ip-network",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda d: d.ip_address or None,
+    ),
+    SanremoYouSensorDescription(
+        key="mac_address",
+        translation_key="mac_address",
+        name="MAC Address",
+        icon="mdi:network-outline",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda d: d.mac_address or None,
+    ),
+    SanremoYouSensorDescription(
+        key="firmware_version",
+        translation_key="firmware_version",
+        name="Firmware Version",
+        icon="mdi:chip",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda d: d.firmware_version or None,
     ),
 )
 

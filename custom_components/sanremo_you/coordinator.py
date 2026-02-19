@@ -37,6 +37,14 @@ class SanremoYouCoordinator(DataUpdateCoordinator[SanremoYouData]):
             # Fetch device info on first poll
             if self.device_info is None:
                 self.device_info = await self.api.get_device_info()
+            # Merge static device_info fields into data for sensor access
+            # (key 150 doesn't return IP/MAC/firmware — those come from key 105)
+            if self.device_info:
+                data.ip_address = data.ip_address or self.device_info.ip_address
+                data.mac_address = data.mac_address or self.device_info.mac_address
+                data.firmware_version = (
+                    data.firmware_version or self.device_info.firmware_version
+                )
             return data
         except (aiohttp.ClientError, TimeoutError) as err:
             raise UpdateFailed(f"Error communicating with Sanremo YOU: {err}") from err

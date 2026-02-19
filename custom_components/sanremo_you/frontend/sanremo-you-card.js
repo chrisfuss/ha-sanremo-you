@@ -48,7 +48,7 @@ class SanremoYouCard extends HTMLElement {
     this._view = view;
     const views = ['main','settings','programming','counters','alarms',
                    'user-settings','setpoint-coffee','setpoint-group',
-                   'setpoint-steam','clock'];
+                   'setpoint-steam','clock','wifi'];
     views.forEach(v => {
       const el = this._$(`view-${v}`);
       if (el) el.style.display = (v === view) ? 'block' : 'none';
@@ -113,6 +113,8 @@ class SanremoYouCard extends HTMLElement {
       this._updateSetpointView(v);
     } else if (v === 'clock') {
       this._updateClock();
+    } else if (v === 'wifi') {
+      this._updateWifi();
     }
   }
 
@@ -167,9 +169,11 @@ class SanremoYouCard extends HTMLElement {
   }
 
   _updateSettings(statusVal, isAvail, isOn, isEco, sched, hasAlarm, hasWarn) {
-    const conn2 = this._$('settings-conn');
-    conn2.textContent = isAvail ? 'Wi-Fi network status - Connected' : 'Wi-Fi network status - Disconnected';
-    conn2.className = 'connectivity ' + (isAvail ? 'connected' : 'disconnected');
+    const connVal = this._$('settings-conn-val');
+    if (connVal) {
+      connVal.textContent = isAvail ? 'Connected' : 'Disconnected';
+      connVal.style.color = isAvail ? 'var(--grn)' : 'var(--red)';
+    }
     this._$('s-ib-eco').className = 'ib-icon' + (isEco ? ' active' : '');
     this._$('s-ib-power').className = 'ib-icon' + (isOn ? ' active' : '');
     this._$('s-ib-sched').className = 'ib-icon' + (sched?.state === 'on' ? ' active' : '');
@@ -242,6 +246,42 @@ class SanremoYouCard extends HTMLElement {
     this._$('clock-date').textContent = `${d}/${mo}/${y}`;
   }
 
+  _updateWifi() {
+    const ssid = this._s('wifi_ssid');
+    const signal = this._s('wifi_signal');
+    const ip = this._s('ip_address');
+    const mac = this._s('mac_address');
+    const fw = this._s('firmware_version');
+    const status = this._s('machine_status');
+    const isAvail = status?.state !== 'unavailable' && status?.state !== 'unknown';
+
+    this._$('wifi-ssid').textContent = ssid?.state && ssid.state !== 'unknown' ? ssid.state : '--';
+    this._$('wifi-status').textContent = isAvail ? 'Ip obtained [Connected]' : 'Disconnected';
+    this._$('wifi-status').style.color = isAvail ? 'var(--grn)' : 'var(--red)';
+    this._$('wifi-ip').textContent = ip?.state && ip.state !== 'unknown' ? ip.state : '--';
+    this._$('wifi-mac').textContent = mac?.state && mac.state !== 'unknown' ? mac.state : '--';
+    this._$('wifi-fw').textContent = fw?.state && fw.state !== 'unknown' ? fw.state : '--';
+    this._$('cloud-status').textContent = isAvail ? 'Connected' : 'Disconnected';
+    this._$('cloud-status').style.color = isAvail ? 'var(--grn)' : 'var(--red)';
+
+    // Signal strength bars
+    // Signal value from API is a raw integer (0-100 typical range)
+    const sigVal = parseInt(signal?.state) || 0;
+    const barCount = 5;
+    const filled = Math.min(barCount, Math.max(0, Math.ceil(sigVal / 20)));
+    const barsEl = this._$('wifi-signal-bars');
+    barsEl.innerHTML = '';
+    const container = document.createElement('div');
+    container.className = 'signal-bars';
+    for (let i = 0; i < barCount; i++) {
+      const bar = document.createElement('div');
+      bar.className = 'signal-bar' + (i < filled ? ' filled' : '');
+      bar.style.height = (6 + i * 4) + 'px';
+      container.appendChild(bar);
+    }
+    barsEl.appendChild(container);
+  }
+
   /* ── event listeners ── */
   _attachListeners() {
     const p = this._prefix;
@@ -276,9 +316,10 @@ class SanremoYouCard extends HTMLElement {
     this._$('nav-counters').addEventListener('click', () => this._showView('counters'));
     this._$('nav-alarms').addEventListener('click', () => this._showView('alarms'));
     this._$('nav-user-settings').addEventListener('click', () => this._showView('user-settings'));
+    this._$('nav-wifi').addEventListener('click', () => this._showView('wifi'));
 
     /* sub-view back buttons → settings */
-    ['back-prog','back-cnt','back-alarms','back-us'].forEach(id =>
+    ['back-prog','back-cnt','back-alarms','back-us','back-wifi'].forEach(id =>
       this._$(id).addEventListener('click', () => this._showView('settings'))
     );
 
@@ -443,6 +484,16 @@ class SanremoYouCard extends HTMLElement {
 .sched-toggle-icon ha-icon{--mdc-icon-size:26px;color:var(--t2)}
 .sched-toggle-controls{flex:1;display:flex;align-items:center;justify-content:center;gap:20px}
 
+/* ── network info sections ── */
+.net-section{background:var(--sf);margin:6px 0;padding:4px 16px;border-radius:0}
+.net-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--sf2)}
+.net-row:last-child{border-bottom:none}
+.net-label{font-size:14px;color:var(--t2)}
+.net-value{font-size:14px;font-weight:600;text-align:right}
+.signal-bars{display:flex;gap:3px;align-items:flex-end;height:22px}
+.signal-bar{width:6px;border-radius:1px;background:var(--sf2)}
+.signal-bar.filled{background:var(--grn)}
+
 /* ── responsive ── */
 @media(max-width:400px){.gauges{gap:4px}.gauge .g-value{font-size:20px}.gauge{padding:10px 4px 8px}.ic-value{font-size:16px}.sp-val{font-size:24px}}
 </style>
@@ -519,7 +570,10 @@ class SanremoYouCard extends HTMLElement {
       <div class="ib-icon" id="s-ib-sched"><ha-icon icon="mdi:calendar-clock"></ha-icon></div>
       <div class="ib-icon" id="s-ib-warn"><ha-icon icon="mdi:alert-outline"></ha-icon></div>
     </div>
-    <div class="connectivity connected" id="settings-conn">Wi-Fi network status - Connected</div>
+    <div class="nav-row" id="nav-wifi" style="margin-top:10px">
+      <span class="nr-label"><ha-icon icon="mdi:wifi" style="--mdc-icon-size:18px;vertical-align:middle;margin-right:8px;color:var(--t2)"></ha-icon>Wi-Fi network status</span>
+      <div class="nr-right"><span class="nr-value" id="settings-conn-val">Connected</span><span class="nr-chev">›</span></div>
+    </div>
     <div class="settings-grid">
       <div class="settings-tile" id="nav-programming">
         <ha-icon icon="mdi:calendar-clock"></ha-icon>
@@ -693,6 +747,38 @@ class SanremoYouCard extends HTMLElement {
       <div class="clock-time" id="clock-time">--:--</div>
       <div class="clock-date" id="clock-date">--/--/----</div>
       <button class="sync-btn" id="btn-sync-clock">Sync Clock</button>
+    </div>
+  </div>
+
+  <!-- ═══ WI-FI STATUS ═══ -->
+  <div id="view-wifi" style="display:none">
+    <div class="sub-hdr">
+      <div class="back" id="back-wifi"><ha-icon icon="mdi:chevron-left"></ha-icon></div>
+      <div class="logo">YOU</div>
+      <div class="gear"><ha-icon icon="mdi:cog"></ha-icon></div>
+    </div>
+
+    <div class="section-title">Wi-Fi network status</div>
+    <div class="net-section">
+      <div class="net-row"><span class="net-label">SSID:</span><span class="net-value" id="wifi-ssid">--</span></div>
+      <div class="net-row"><span class="net-label">Status:</span><span class="net-value" id="wifi-status">--</span></div>
+      <div class="net-row"><span class="net-label">Signal:</span><div class="net-value" id="wifi-signal-bars"></div></div>
+    </div>
+
+    <div class="section-title">Cloud connection status</div>
+    <div class="net-section">
+      <div class="net-row"><span class="net-label">Status:</span><span class="net-value" id="cloud-status">--</span></div>
+    </div>
+
+    <div class="section-title">Wi-Fi device information</div>
+    <div class="net-section">
+      <div class="net-row"><span class="net-label">MAC:</span><span class="net-value" id="wifi-mac">--</span></div>
+      <div class="net-row"><span class="net-label">Firmware version</span><span class="net-value" id="wifi-fw">--</span></div>
+    </div>
+
+    <div class="section-title">Network addresses</div>
+    <div class="net-section">
+      <div class="net-row"><span class="net-label">IP:</span><span class="net-value" id="wifi-ip">--</span></div>
     </div>
   </div>
 
