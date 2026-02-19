@@ -14,6 +14,7 @@ from ..const import JSMODULES, URL_BASE
 _LOGGER = logging.getLogger(__name__)
 
 FRONTEND_DIR = Path(__file__).parent
+MAX_RETRIES = 5
 
 
 class JSModuleRegistration:
@@ -23,6 +24,7 @@ class JSModuleRegistration:
         """Initialize the registration."""
         self.hass = hass
         self.lovelace = hass.data.get("lovelace")
+        self._retry_count = 0
 
     async def async_register(self) -> None:
         """Register static path and Lovelace resources."""
@@ -65,8 +67,16 @@ class JSModuleRegistration:
 
     async def _async_retry_register_modules(self, _now=None) -> None:
         """Retry registering modules after a delay."""
+        self._retry_count += 1
         if self.lovelace.resources.loaded:
             await self._async_register_modules()
+        elif self._retry_count >= MAX_RETRIES:
+            _LOGGER.warning(
+                "Lovelace resources not loaded after %d retries, giving up. "
+                "Add the card resource manually: url: %s/sanremo-you-card.js, type: module",
+                MAX_RETRIES,
+                URL_BASE,
+            )
         else:
             _LOGGER.debug("Lovelace resources still not loaded, retrying in 5 seconds")
             async_call_later(
