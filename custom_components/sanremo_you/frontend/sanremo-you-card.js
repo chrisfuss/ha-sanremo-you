@@ -153,19 +153,12 @@ function _t(lang, key) {
   return (_TRANSLATIONS[l] || _TRANSLATIONS.en)[key] || _TRANSLATIONS.en[key] || key;
 }
 
-/* ── Config Editor ── */
+/* ── Config Editor (light DOM – no Shadow DOM for HA compatibility) ── */
 class SanremoYouCardEditor extends HTMLElement {
   constructor() {
     super();
     this._config = {};
     this._hass = null;
-    this._root = this.attachShadow({ mode: 'open' });
-  }
-
-  connectedCallback() {
-    if (!this._root.hasChildNodes()) {
-      this._render();
-    }
   }
 
   set hass(hass) {
@@ -189,7 +182,7 @@ class SanremoYouCardEditor extends HTMLElement {
         const friendlyName = this._hass.states[entityId].attributes.friendly_name || match[1];
         devices.push({
           prefix: match[1],
-          name: friendlyName.replace(' Machine Status', '')
+          name: friendlyName.replace(' Machine Status', '').replace(' Estado de la máquina', '').replace(' État de la machine', '').replace(' Maschinenstatus', '')
         });
       }
     }
@@ -202,20 +195,19 @@ class SanremoYouCardEditor extends HTMLElement {
     const currentName = this._config.name || '';
     const lang = this._hass?.language;
 
-    this._root.innerHTML = `
+    this.innerHTML = `
       <style>
-        :host { display: block; }
-        .editor { padding: 16px; }
-        .field { margin-bottom: 16px; }
-        .field label {
+        .sry-editor { padding: 16px 0; }
+        .sry-editor .field { margin-bottom: 16px; }
+        .sry-editor .field label {
           display: block; font-weight: 500; margin-bottom: 6px;
           font-size: 14px; color: var(--primary-text-color);
         }
-        .field .desc {
+        .sry-editor .field .desc {
           font-size: 12px; color: var(--secondary-text-color);
           margin-bottom: 6px;
         }
-        select, input {
+        .sry-editor select, .sry-editor input {
           width: 100%; padding: 8px 12px; border-radius: 8px;
           border: 1px solid var(--divider-color, #ccc);
           background: var(--card-background-color, #fff);
@@ -223,15 +215,15 @@ class SanremoYouCardEditor extends HTMLElement {
           font-size: 14px; box-sizing: border-box;
           outline: none;
         }
-        select:focus, input:focus {
+        .sry-editor select:focus, .sry-editor input:focus {
           border-color: var(--primary-color);
         }
       </style>
-      <div class="editor">
+      <div class="sry-editor">
         <div class="field">
           <label>${_t(lang, 'coffee_machine')}</label>
           <div class="desc">${_t(lang, 'select_device')}</div>
-          <select id="prefix">
+          <select id="sry-prefix">
             ${devices.length === 0
               ? `<option value="${currentPrefix}">${currentPrefix}</option>`
               : devices.map(d =>
@@ -243,15 +235,15 @@ class SanremoYouCardEditor extends HTMLElement {
         <div class="field">
           <label>${_t(lang, 'card_name')}</label>
           <div class="desc">${_t(lang, 'card_name_desc')}</div>
-          <input type="text" id="name" value="${currentName}" placeholder="${_t(lang, 'card_name_placeholder')}">
+          <input type="text" id="sry-name" value="${currentName}" placeholder="${_t(lang, 'card_name_placeholder')}">
         </div>
       </div>`;
 
-    this._root.getElementById('prefix').addEventListener('change', (e) => {
+    this.querySelector('#sry-prefix').addEventListener('change', (e) => {
       this._config = { ...this._config, entity_prefix: e.target.value };
       this._fireChanged();
     });
-    this._root.getElementById('name').addEventListener('input', (e) => {
+    this.querySelector('#sry-name').addEventListener('input', (e) => {
       const val = e.target.value.trim();
       if (val) {
         this._config = { ...this._config, name: val };

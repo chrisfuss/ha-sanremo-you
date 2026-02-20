@@ -11,7 +11,7 @@ JSMODULES: Final[list[dict[str, str]]] = [
     {
         "name": "Sanremo YOU Card",
         "filename": "sanremo-you-card.js",
-        "version": "1.6.0",
+        "version": "1.7.0",
     },
 ]
 DEFAULT_PORT = 80
