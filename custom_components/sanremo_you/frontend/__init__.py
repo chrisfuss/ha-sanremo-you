@@ -39,7 +39,7 @@ class JSModuleRegistration:
             _LOGGER.warning("Lovelace integration not found, cannot auto-register card")
             return
 
-        if getattr(self.lovelace, "mode", "yaml") != "storage":
+        if getattr(self.lovelace, "resource_mode", "yaml") != "storage":
             _LOGGER.info(
                 "Lovelace is in YAML mode; add the card resource manually: "
                 "url: %s/sanremo-you-card.js, type: module",
