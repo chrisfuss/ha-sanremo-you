@@ -30,6 +30,11 @@ class JSModuleRegistration:
         """Register static path and Lovelace resources."""
         await self._async_register_static_path()
 
+        # Re-fetch lovelace at registration time — during startup it may not
+        # have been available when __init__ ran, but by the time
+        # EVENT_HOMEASSISTANT_STARTED fires it will be loaded.
+        self.lovelace = self.hass.data.get("lovelace")
+
         if self.lovelace is None:
             _LOGGER.warning("Lovelace integration not found, cannot auto-register card")
             return

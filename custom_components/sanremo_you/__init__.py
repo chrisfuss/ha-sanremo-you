@@ -5,8 +5,8 @@ from __future__ import annotations
 import logging
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import Platform
-from homeassistant.core import HomeAssistant
+from homeassistant.const import EVENT_HOMEASSISTANT_STARTED, Platform
+from homeassistant.core import CoreState, HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .api import SanremoYouApi
@@ -30,8 +30,16 @@ type SanremoYouConfigEntry = ConfigEntry
 
 async def async_setup(hass: HomeAssistant, config: dict) -> bool:
     """Set up the Sanremo YOU integration (frontend registration)."""
-    registration = JSModuleRegistration(hass)
-    await registration.async_register()
+
+    async def _register_frontend(_event=None) -> None:
+        registration = JSModuleRegistration(hass)
+        await registration.async_register()
+
+    if hass.state == CoreState.running:
+        await _register_frontend()
+    else:
+        hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STARTED, _register_frontend)
+
     return True
 
 
