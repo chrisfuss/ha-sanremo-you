@@ -1,3 +1,158 @@
+/* ── Translations ── */
+const _TRANSLATIONS = {
+  en: {
+    // Main view
+    connected: 'Connected', disconnected: 'Disconnected',
+    steam: 'Steam', tank: 'Tank', infusion: 'Infusion',
+    extraction: 'Extraction', daily: 'Daily', current: 'current',
+    set: 'set', low: 'LOW', ok: 'OK',
+    // Settings menu
+    wifi_network_status: 'Wi-Fi network status',
+    programming: 'Programming', counters: 'Counters',
+    alarms: 'Alarms', user_settings: 'User Settings',
+    // Programming
+    time_slot: 'Time slot',
+    // Counters
+    coffee_counters: 'Coffee counters',
+    dose_1: 'Dose 1', dose_2: 'Dose 2', dose_3: 'Dose 3',
+    continuous: 'Continuous', paddle: 'Paddle',
+    steam_activation: 'Steam Activation', tea: 'Tea',
+    // Alarms
+    active_alarms: 'Active alarms',
+    no_active_alarm: 'No active alarm', no_active_warning: 'No active warning',
+    // User settings
+    coffee_boiler_temperature: 'Coffee boiler temperature',
+    group_temperature: 'Group temperature',
+    service_boiler_pressure: 'Service boiler pressure',
+    clock_settings: 'Clock settings',
+    // Setpoints
+    coffee_boiler_settings: 'Coffee boiler settings',
+    filter_holder_settings: 'Coffee filter holder settings',
+    steam_boiler_settings: 'Steam boiler settings',
+    // Clock
+    clock: 'Clock', sync_clock: 'Sync Clock',
+    // Wi-Fi
+    cloud_connection_status: 'Cloud connection status',
+    wifi_device_information: 'Wi-Fi device information',
+    firmware_version: 'Firmware version',
+    network_addresses: 'Network addresses',
+    ip_obtained_connected: 'Ip obtained [Connected]',
+    // Config editor
+    coffee_machine: 'Coffee Machine',
+    select_device: 'Select your Sanremo YOU device',
+    card_name: 'Card Name (optional)',
+    card_name_desc: 'Override the displayed machine name',
+    card_name_placeholder: 'Auto-detected from device',
+  },
+  de: {
+    connected: 'Verbunden', disconnected: 'Getrennt',
+    steam: 'Dampf', tank: 'Tank', infusion: 'Brühung',
+    extraction: 'Extraktion', daily: 'Heute', current: 'aktuell',
+    set: 'Soll', low: 'NIEDRIG', ok: 'OK',
+    wifi_network_status: 'WLAN-Netzwerkstatus',
+    programming: 'Programmierung', counters: 'Zähler',
+    alarms: 'Alarme', user_settings: 'Einstellungen',
+    time_slot: 'Zeitfenster',
+    coffee_counters: 'Kaffeezähler',
+    dose_1: 'Dosis 1', dose_2: 'Dosis 2', dose_3: 'Dosis 3',
+    continuous: 'Dauerbezug', paddle: 'Hebel',
+    steam_activation: 'Dampf', tea: 'Tee',
+    active_alarms: 'Aktive Alarme',
+    no_active_alarm: 'Kein aktiver Alarm', no_active_warning: 'Keine aktive Warnung',
+    coffee_boiler_temperature: 'Kaffeeboiler-Temperatur',
+    group_temperature: 'Brühgruppentemperatur',
+    service_boiler_pressure: 'Dampfkesseldruck',
+    clock_settings: 'Uhreinstellungen',
+    coffee_boiler_settings: 'Kaffeeboiler-Einstellungen',
+    filter_holder_settings: 'Siebträger-Einstellungen',
+    steam_boiler_settings: 'Dampfkessel-Einstellungen',
+    clock: 'Uhr', sync_clock: 'Uhr synchronisieren',
+    cloud_connection_status: 'Cloud-Verbindungsstatus',
+    wifi_device_information: 'WLAN-Geräteinformationen',
+    firmware_version: 'Firmware-Version',
+    network_addresses: 'Netzwerkadressen',
+    ip_obtained_connected: 'IP erhalten [Verbunden]',
+    coffee_machine: 'Kaffeemaschine',
+    select_device: 'Wähle dein Sanremo YOU Gerät',
+    card_name: 'Kartenname (optional)',
+    card_name_desc: 'Angezeigten Maschinennamen überschreiben',
+    card_name_placeholder: 'Automatisch vom Gerät erkannt',
+  },
+  fr: {
+    connected: 'Connecté', disconnected: 'Déconnecté',
+    steam: 'Vapeur', tank: 'Réservoir', infusion: 'Infusion',
+    extraction: 'Extraction', daily: 'Aujourd\'hui', current: 'actuel',
+    set: 'consigne', low: 'BAS', ok: 'OK',
+    wifi_network_status: 'État du réseau Wi-Fi',
+    programming: 'Programmation', counters: 'Compteurs',
+    alarms: 'Alarmes', user_settings: 'Paramètres',
+    time_slot: 'Créneau',
+    coffee_counters: 'Compteurs de café',
+    dose_1: 'Dose 1', dose_2: 'Dose 2', dose_3: 'Dose 3',
+    continuous: 'Continu', paddle: 'Levier',
+    steam_activation: 'Vapeur', tea: 'Thé',
+    active_alarms: 'Alarmes actives',
+    no_active_alarm: 'Aucune alarme active', no_active_warning: 'Aucun avertissement actif',
+    coffee_boiler_temperature: 'Température chaudière café',
+    group_temperature: 'Température du groupe',
+    service_boiler_pressure: 'Pression chaudière vapeur',
+    clock_settings: 'Réglages horloge',
+    coffee_boiler_settings: 'Réglages chaudière café',
+    filter_holder_settings: 'Réglages porte-filtre',
+    steam_boiler_settings: 'Réglages chaudière vapeur',
+    clock: 'Horloge', sync_clock: 'Synchroniser l\'horloge',
+    cloud_connection_status: 'État connexion cloud',
+    wifi_device_information: 'Informations appareil Wi-Fi',
+    firmware_version: 'Version du firmware',
+    network_addresses: 'Adresses réseau',
+    ip_obtained_connected: 'IP obtenue [Connecté]',
+    coffee_machine: 'Machine à café',
+    select_device: 'Sélectionnez votre Sanremo YOU',
+    card_name: 'Nom de la carte (optionnel)',
+    card_name_desc: 'Remplacer le nom affiché de la machine',
+    card_name_placeholder: 'Détecté automatiquement',
+  },
+  es: {
+    connected: 'Conectado', disconnected: 'Desconectado',
+    steam: 'Vapor', tank: 'Depósito', infusion: 'Infusión',
+    extraction: 'Extracción', daily: 'Hoy', current: 'actual',
+    set: 'objetivo', low: 'BAJO', ok: 'OK',
+    wifi_network_status: 'Estado de red Wi-Fi',
+    programming: 'Programación', counters: 'Contadores',
+    alarms: 'Alarmas', user_settings: 'Ajustes',
+    time_slot: 'Franja',
+    coffee_counters: 'Contadores de café',
+    dose_1: 'Dosis 1', dose_2: 'Dosis 2', dose_3: 'Dosis 3',
+    continuous: 'Continuo', paddle: 'Palanca',
+    steam_activation: 'Vapor', tea: 'Té',
+    active_alarms: 'Alarmas activas',
+    no_active_alarm: 'Sin alarma activa', no_active_warning: 'Sin advertencia activa',
+    coffee_boiler_temperature: 'Temperatura caldera café',
+    group_temperature: 'Temperatura del grupo',
+    service_boiler_pressure: 'Presión caldera de vapor',
+    clock_settings: 'Ajustes de reloj',
+    coffee_boiler_settings: 'Ajustes caldera de café',
+    filter_holder_settings: 'Ajustes portafiltro',
+    steam_boiler_settings: 'Ajustes caldera de vapor',
+    clock: 'Reloj', sync_clock: 'Sincronizar reloj',
+    cloud_connection_status: 'Estado conexión cloud',
+    wifi_device_information: 'Información del dispositivo Wi-Fi',
+    firmware_version: 'Versión de firmware',
+    network_addresses: 'Direcciones de red',
+    ip_obtained_connected: 'IP obtenida [Conectado]',
+    coffee_machine: 'Máquina de café',
+    select_device: 'Selecciona tu Sanremo YOU',
+    card_name: 'Nombre de la tarjeta (opcional)',
+    card_name_desc: 'Anular el nombre mostrado de la máquina',
+    card_name_placeholder: 'Detectado automáticamente',
+  },
+};
+
+function _t(lang, key) {
+  const l = lang?.substring(0, 2) || 'en';
+  return (_TRANSLATIONS[l] || _TRANSLATIONS.en)[key] || _TRANSLATIONS.en[key] || key;
+}
+
 /* ── Config Editor ── */
 class SanremoYouCardEditor extends HTMLElement {
   constructor() {
@@ -68,8 +223,8 @@ class SanremoYouCardEditor extends HTMLElement {
       </style>
       <div class="editor">
         <div class="field">
-          <label>Coffee Machine</label>
-          <div class="desc">Select your Sanremo YOU device</div>
+          <label>${_t(this._hass?.language, 'coffee_machine')}</label>
+          <div class="desc">${_t(this._hass?.language, 'select_device')}</div>
           <select id="prefix">
             ${devices.length === 0
               ? `<option value="${currentPrefix}">${currentPrefix}</option>`
@@ -80,9 +235,9 @@ class SanremoYouCardEditor extends HTMLElement {
           </select>
         </div>
         <div class="field">
-          <label>Card Name (optional)</label>
-          <div class="desc">Override the displayed machine name</div>
-          <input type="text" id="name" value="${currentName}" placeholder="Auto-detected from device">
+          <label>${_t(this._hass?.language, 'card_name')}</label>
+          <div class="desc">${_t(this._hass?.language, 'card_name_desc')}</div>
+          <input type="text" id="name" value="${currentName}" placeholder="${_t(this._hass?.language, 'card_name_placeholder')}">
         </div>
       </div>`;
 
@@ -139,10 +294,17 @@ class SanremoYouCard extends HTMLElement {
   }
 
   set hass(hass) {
+    const langChanged = this._hass && hass.language !== this._hass.language;
     this._hass = hass;
     if (!this._initialized) return;
+    if (langChanged) {
+      this._buildDOM();
+      this._attachListeners();
+    }
     this._update();
   }
+
+  _t(key) { return _t(this._hass?.language, key); }
 
   getCardSize() { return 6; }
 
@@ -243,7 +405,7 @@ class SanremoYouCard extends HTMLElement {
       nameEl.textContent = status?.attributes?.friendly_name?.replace(' Machine Status', '') || 'SANREMO-YOU';
     }
     const conn = this._$('connectivity');
-    conn.textContent = isAvail ? statusVal : 'Disconnected';
+    conn.textContent = isAvail ? statusVal : this._t('disconnected');
     conn.className = 'connectivity ' + (isAvail ? 'connected' : 'disconnected');
 
     this._$('power-toggle').className = 'toggle-track' + (isOn ? ' on' : '');
@@ -257,12 +419,12 @@ class SanremoYouCard extends HTMLElement {
     const steam = this._s('steam_boiler_pressure');
     const steamSet = this._n('steam_pressure_setpoint');
     this._$('steam-val').textContent = steam ? parseFloat(steam.state).toFixed(2) : '--';
-    this._$('steam-set').textContent = steamSet ? `/ ${parseFloat(steamSet.state).toFixed(1)} set` : '';
+    this._$('steam-set').textContent = steamSet ? `/ ${parseFloat(steamSet.state).toFixed(1)} ${this._t('set')}` : '';
 
     const temp = this._s('group_temperature');
     const tempSet = this._n('group_temperature_setpoint');
     this._$('temp-val').textContent = temp ? parseFloat(temp.state).toFixed(1) : '--';
-    this._$('temp-set').textContent = tempSet ? `/ ${parseFloat(tempSet.state).toFixed(1)} set` : '';
+    this._$('temp-set').textContent = tempSet ? `/ ${parseFloat(tempSet.state).toFixed(1)} ${this._t('set')}` : '';
 
     const tank = this._b('water_tank');
     const tankLow = tank?.state === 'on';
@@ -278,19 +440,19 @@ class SanremoYouCard extends HTMLElement {
       b.style.height = (10 + i * 4) + 'px';
       bars.appendChild(b);
     }
-    tankSt.textContent = tankLow ? 'LOW' : 'OK';
+    tankSt.textContent = tankLow ? this._t('low') : this._t('ok');
     tankSt.className = 'g-status ' + (tankLow ? 'bad' : 'good');
 
     const ext = this._s('extraction_time');
     this._$('ext-val').textContent = ext ? parseFloat(ext.state).toFixed(1) + ' sec' : '-- sec';
     const daily = this._s('daily_shot_count');
-    this._$('daily-val').textContent = daily ? String(daily.state).padStart(3, '0') + ' current' : '---';
+    this._$('daily-val').textContent = daily ? String(daily.state).padStart(3, '0') + ` ${this._t('current')}` : '---';
   }
 
   _updateSettings(statusVal, isAvail, isOn, isEco, sched, hasAlarm, hasWarn) {
     const connVal = this._$('settings-conn-val');
     if (connVal) {
-      connVal.textContent = isAvail ? 'Connected' : 'Disconnected';
+      connVal.textContent = isAvail ? this._t('connected') : this._t('disconnected');
       connVal.style.color = isAvail ? 'var(--grn)' : 'var(--red)';
     }
     this._$('s-ib-eco').className = 'ib-icon' + (isEco ? ' active' : '');
@@ -326,8 +488,8 @@ class SanremoYouCard extends HTMLElement {
   _updateAlarms(alarms, warns, hasAlarm, hasWarn) {
     const icon = this._$('alarm-icon');
     icon.className = 'alarm-badge ' + (hasAlarm ? 'alarm' : hasWarn ? 'warning' : '');
-    this._$('alarm-text').textContent = hasAlarm ? alarms.state : 'No active alarm';
-    this._$('warning-text').textContent = hasWarn ? warns.state : 'No active warning';
+    this._$('alarm-text').textContent = hasAlarm ? alarms.state : this._t('no_active_alarm');
+    this._$('warning-text').textContent = hasWarn ? warns.state : this._t('no_active_warning');
   }
 
   _updateUserSettings() {
@@ -375,12 +537,12 @@ class SanremoYouCard extends HTMLElement {
     const isAvail = status?.state !== 'unavailable' && status?.state !== 'unknown';
 
     this._$('wifi-ssid').textContent = ssid?.state && ssid.state !== 'unknown' ? ssid.state : '--';
-    this._$('wifi-status').textContent = isAvail ? 'Ip obtained [Connected]' : 'Disconnected';
+    this._$('wifi-status').textContent = isAvail ? this._t('ip_obtained_connected') : this._t('disconnected');
     this._$('wifi-status').style.color = isAvail ? 'var(--grn)' : 'var(--red)';
     this._$('wifi-ip').textContent = ip?.state && ip.state !== 'unknown' ? ip.state : '--';
     this._$('wifi-mac').textContent = mac?.state && mac.state !== 'unknown' ? mac.state : '--';
     this._$('wifi-fw').textContent = fw?.state && fw.state !== 'unknown' ? fw.state : '--';
-    this._$('cloud-status').textContent = isAvail ? 'Connected' : 'Disconnected';
+    this._$('cloud-status').textContent = isAvail ? this._t('connected') : this._t('disconnected');
     this._$('cloud-status').style.color = isAvail ? 'var(--grn)' : 'var(--red)';
 
     // Signal strength bars
@@ -633,24 +795,24 @@ class SanremoYouCard extends HTMLElement {
       <div class="ib-icon" id="ib-sched"><ha-icon icon="mdi:calendar-clock"></ha-icon></div>
       <div class="ib-icon" id="ib-warn"><ha-icon icon="mdi:alert-outline"></ha-icon></div>
     </div>
-    <div class="connectivity connected" id="connectivity">Connected</div>
+    <div class="connectivity connected" id="connectivity">${this._t('connected')}</div>
     <div class="gauges">
       <div class="gauge" id="gauge-steam">
         <div class="g-icon"><ha-icon icon="mdi:gauge"></ha-icon></div>
-        <div class="g-label">Steam</div>
+        <div class="g-label">${this._t('steam')}</div>
         <div class="g-value" id="steam-val">--</div>
         <div class="g-unit">bar</div>
         <div class="g-setpoint" id="steam-set"></div>
       </div>
       <div class="gauge" id="gauge-tank">
         <div class="g-icon"><ha-icon icon="mdi:water"></ha-icon></div>
-        <div class="g-label">Tank</div>
+        <div class="g-label">${this._t('tank')}</div>
         <div class="tank-bars" id="tank-bars"></div>
-        <div class="g-status good" id="tank-status">OK</div>
+        <div class="g-status good" id="tank-status">${this._t('ok')}</div>
       </div>
       <div class="gauge" id="gauge-temp">
         <div class="g-icon"><ha-icon icon="mdi:coffee"></ha-icon></div>
-        <div class="g-label">Infusion</div>
+        <div class="g-label">${this._t('infusion')}</div>
         <div class="g-value" id="temp-val">--</div>
         <div class="g-unit">°C</div>
         <div class="g-setpoint" id="temp-set"></div>
@@ -659,11 +821,11 @@ class SanremoYouCard extends HTMLElement {
     <div class="info-row">
       <div class="info-cell" id="cell-ext">
         <div class="ic-icon"><ha-icon icon="mdi:timer-outline"></ha-icon></div>
-        <div><div class="ic-label">Extraction</div><div class="ic-value" id="ext-val">-- sec</div></div>
+        <div><div class="ic-label">${this._t('extraction')}</div><div class="ic-value" id="ext-val">-- sec</div></div>
       </div>
       <div class="info-cell" id="cell-daily">
         <div class="ic-icon"><ha-icon icon="mdi:coffee"></ha-icon></div>
-        <div><div class="ic-label">Daily</div><div class="ic-value" id="daily-val">---</div></div>
+        <div><div class="ic-label">${this._t('daily')}</div><div class="ic-value" id="daily-val">---</div></div>
       </div>
     </div>
     <div class="power-row">
@@ -690,25 +852,25 @@ class SanremoYouCard extends HTMLElement {
       <div class="ib-icon" id="s-ib-warn"><ha-icon icon="mdi:alert-outline"></ha-icon></div>
     </div>
     <div class="nav-row" id="nav-wifi" style="margin-top:10px">
-      <span class="nr-label"><ha-icon icon="mdi:wifi" style="--mdc-icon-size:18px;vertical-align:middle;margin-right:8px;color:var(--t2)"></ha-icon>Wi-Fi network status</span>
-      <div class="nr-right"><span class="nr-value" id="settings-conn-val">Connected</span><span class="nr-chev">›</span></div>
+      <span class="nr-label"><ha-icon icon="mdi:wifi" style="--mdc-icon-size:18px;vertical-align:middle;margin-right:8px;color:var(--t2)"></ha-icon>${this._t('wifi_network_status')}</span>
+      <div class="nr-right"><span class="nr-value" id="settings-conn-val">${this._t('connected')}</span><span class="nr-chev">›</span></div>
     </div>
     <div class="settings-grid">
       <div class="settings-tile" id="nav-programming">
         <ha-icon icon="mdi:calendar-clock"></ha-icon>
-        <span class="tile-label">Programming</span>
+        <span class="tile-label">${this._t('programming')}</span>
       </div>
       <div class="settings-tile" id="nav-counters">
         <ha-icon icon="mdi:clipboard-text-outline"></ha-icon>
-        <span class="tile-label">Counters</span>
+        <span class="tile-label">${this._t('counters')}</span>
       </div>
       <div class="settings-tile" id="nav-alarms">
         <ha-icon icon="mdi:alert-outline"></ha-icon>
-        <span class="tile-label">Alarms</span>
+        <span class="tile-label">${this._t('alarms')}</span>
       </div>
       <div class="settings-tile" id="nav-user-settings">
         <ha-icon icon="mdi:account-outline"></ha-icon>
-        <span class="tile-label">User Settings</span>
+        <span class="tile-label">${this._t('user_settings')}</span>
       </div>
     </div>
   </div>
@@ -720,7 +882,7 @@ class SanremoYouCard extends HTMLElement {
       <div class="logo">YOU</div>
       <div class="gear"><ha-icon icon="mdi:cog"></ha-icon></div>
     </div>
-    <div class="section-title">Programming</div>
+    <div class="section-title">${this._t('programming')}</div>
     <div class="sched-toggle-row">
       <div class="sched-toggle-icon"><ha-icon icon="mdi:calendar-clock"></ha-icon></div>
       <div class="sched-toggle-controls">
@@ -731,12 +893,12 @@ class SanremoYouCard extends HTMLElement {
         <span class="power-label" id="sched-lbl-on">ON</span>
       </div>
     </div>
-    <div class="nav-row" id="slot-row-1"><span class="nr-label">Time slot 1</span><span class="nr-chev">›</span></div>
-    <div class="nav-row" id="slot-row-2"><span class="nr-label">Time slot 2</span><span class="nr-chev">›</span></div>
-    <div class="nav-row" id="slot-row-3"><span class="nr-label">Time slot 3</span><span class="nr-chev">›</span></div>
-    <div class="nav-row" id="slot-row-4"><span class="nr-label">Time slot 4</span><span class="nr-chev">›</span></div>
-    <div class="nav-row" id="slot-row-5"><span class="nr-label">Time slot 5</span><span class="nr-chev">›</span></div>
-    <div class="nav-row" id="slot-row-6"><span class="nr-label">Time slot 6</span><span class="nr-chev">›</span></div>
+    <div class="nav-row" id="slot-row-1"><span class="nr-label">${this._t('time_slot')} 1</span><span class="nr-chev">›</span></div>
+    <div class="nav-row" id="slot-row-2"><span class="nr-label">${this._t('time_slot')} 2</span><span class="nr-chev">›</span></div>
+    <div class="nav-row" id="slot-row-3"><span class="nr-label">${this._t('time_slot')} 3</span><span class="nr-chev">›</span></div>
+    <div class="nav-row" id="slot-row-4"><span class="nr-label">${this._t('time_slot')} 4</span><span class="nr-chev">›</span></div>
+    <div class="nav-row" id="slot-row-5"><span class="nr-label">${this._t('time_slot')} 5</span><span class="nr-chev">›</span></div>
+    <div class="nav-row" id="slot-row-6"><span class="nr-label">${this._t('time_slot')} 6</span><span class="nr-chev">›</span></div>
   </div>
 
   <!-- ═══ COUNTERS ═══ -->
@@ -746,14 +908,14 @@ class SanremoYouCard extends HTMLElement {
       <div class="logo">YOU</div>
       <div class="gear"><ha-icon icon="mdi:cog"></ha-icon></div>
     </div>
-    <div class="section-title">Coffee counters</div>
-    <div class="counter-row"><span class="cr-label">Dose 1</span><span class="cr-value" id="cnt-dose1">--</span></div>
-    <div class="counter-row"><span class="cr-label">Dose 2</span><span class="cr-value" id="cnt-dose2">--</span></div>
-    <div class="counter-row"><span class="cr-label">Dose 3</span><span class="cr-value" id="cnt-dose3">--</span></div>
-    <div class="counter-row"><span class="cr-label">Continuous</span><span class="cr-value" id="cnt-cont">--</span></div>
-    <div class="counter-row"><span class="cr-label">Paddle</span><span class="cr-value" id="cnt-paddle">--</span></div>
-    <div class="counter-row"><span class="cr-label">Steam Activation</span><span class="cr-value" id="cnt-steam">--</span></div>
-    <div class="counter-row"><span class="cr-label">Tea</span><span class="cr-value" id="cnt-tea">--</span></div>
+    <div class="section-title">${this._t('coffee_counters')}</div>
+    <div class="counter-row"><span class="cr-label">${this._t('dose_1')}</span><span class="cr-value" id="cnt-dose1">--</span></div>
+    <div class="counter-row"><span class="cr-label">${this._t('dose_2')}</span><span class="cr-value" id="cnt-dose2">--</span></div>
+    <div class="counter-row"><span class="cr-label">${this._t('dose_3')}</span><span class="cr-value" id="cnt-dose3">--</span></div>
+    <div class="counter-row"><span class="cr-label">${this._t('continuous')}</span><span class="cr-value" id="cnt-cont">--</span></div>
+    <div class="counter-row"><span class="cr-label">${this._t('paddle')}</span><span class="cr-value" id="cnt-paddle">--</span></div>
+    <div class="counter-row"><span class="cr-label">${this._t('steam_activation')}</span><span class="cr-value" id="cnt-steam">--</span></div>
+    <div class="counter-row"><span class="cr-label">${this._t('tea')}</span><span class="cr-value" id="cnt-tea">--</span></div>
   </div>
 
   <!-- ═══ ALARMS ═══ -->
@@ -763,13 +925,13 @@ class SanremoYouCard extends HTMLElement {
       <div class="logo">YOU</div>
       <div class="gear"><ha-icon icon="mdi:cog"></ha-icon></div>
     </div>
-    <div class="section-title">Active alarms</div>
+    <div class="section-title">${this._t('active_alarms')}</div>
     <div class="alarm-panel">
       <div class="alarm-badge" id="alarm-icon"><ha-icon icon="mdi:alert-outline"></ha-icon></div>
       <div class="alarm-lines">
-        <div class="alarm-line" id="alarm-text">No active alarm</div>
+        <div class="alarm-line" id="alarm-text">${this._t('no_active_alarm')}</div>
         <div class="alarm-divider"></div>
-        <div class="alarm-line" id="warning-text">No active warning</div>
+        <div class="alarm-line" id="warning-text">${this._t('no_active_warning')}</div>
       </div>
     </div>
   </div>
@@ -781,21 +943,21 @@ class SanremoYouCard extends HTMLElement {
       <div class="logo">YOU</div>
       <div class="gear"><ha-icon icon="mdi:cog"></ha-icon></div>
     </div>
-    <div class="section-title">User settings</div>
+    <div class="section-title">${this._t('user_settings')}</div>
     <div class="nav-row" id="us-row-coffee">
-      <span class="nr-label">Coffee boiler temperature</span>
+      <span class="nr-label">${this._t('coffee_boiler_temperature')}</span>
       <div class="nr-right"><span class="nr-value" id="us-coffee-val">--</span><span class="nr-chev">›</span></div>
     </div>
     <div class="nav-row" id="us-row-group">
-      <span class="nr-label">Group temperature</span>
+      <span class="nr-label">${this._t('group_temperature')}</span>
       <div class="nr-right"><span class="nr-value" id="us-group-val">--</span><span class="nr-chev">›</span></div>
     </div>
     <div class="nav-row" id="us-row-steam">
-      <span class="nr-label">Service boiler pressure</span>
+      <span class="nr-label">${this._t('service_boiler_pressure')}</span>
       <div class="nr-right"><span class="nr-value" id="us-steam-val">--</span><span class="nr-chev">›</span></div>
     </div>
     <div class="nav-row" id="us-row-clock">
-      <span class="nr-label">Clock settings</span>
+      <span class="nr-label">${this._t('clock_settings')}</span>
       <div class="nr-right"><span class="nr-chev">›</span></div>
     </div>
   </div>
@@ -807,7 +969,7 @@ class SanremoYouCard extends HTMLElement {
       <div class="logo">YOU</div>
       <div class="gear"><ha-icon icon="mdi:cog"></ha-icon></div>
     </div>
-    <div class="section-title">Coffee boiler settings</div>
+    <div class="section-title">${this._t('coffee_boiler_settings')}</div>
     <div class="sp-panel">
       <div class="sp-icon"><ha-icon icon="mdi:coffee"></ha-icon></div>
       <div class="sp-controls">
@@ -825,7 +987,7 @@ class SanremoYouCard extends HTMLElement {
       <div class="logo">YOU</div>
       <div class="gear"><ha-icon icon="mdi:cog"></ha-icon></div>
     </div>
-    <div class="section-title">Coffee filter holder settings</div>
+    <div class="section-title">${this._t('filter_holder_settings')}</div>
     <div class="sp-panel">
       <div class="sp-icon"><ha-icon icon="mdi:coffee"></ha-icon></div>
       <div class="sp-controls">
@@ -843,7 +1005,7 @@ class SanremoYouCard extends HTMLElement {
       <div class="logo">YOU</div>
       <div class="gear"><ha-icon icon="mdi:cog"></ha-icon></div>
     </div>
-    <div class="section-title">Steam boiler settings</div>
+    <div class="section-title">${this._t('steam_boiler_settings')}</div>
     <div class="sp-panel">
       <div class="sp-icon"><ha-icon icon="mdi:gauge"></ha-icon></div>
       <div class="sp-controls">
@@ -861,11 +1023,11 @@ class SanremoYouCard extends HTMLElement {
       <div class="logo">YOU</div>
       <div class="gear"><ha-icon icon="mdi:cog"></ha-icon></div>
     </div>
-    <div class="section-title">Clock</div>
+    <div class="section-title">${this._t('clock')}</div>
     <div class="clock-panel">
       <div class="clock-time" id="clock-time">--:--</div>
       <div class="clock-date" id="clock-date">--/--/----</div>
-      <button class="sync-btn" id="btn-sync-clock">Sync Clock</button>
+      <button class="sync-btn" id="btn-sync-clock">${this._t('sync_clock')}</button>
     </div>
   </div>
 
@@ -877,25 +1039,25 @@ class SanremoYouCard extends HTMLElement {
       <div class="gear"><ha-icon icon="mdi:cog"></ha-icon></div>
     </div>
 
-    <div class="section-title">Wi-Fi network status</div>
+    <div class="section-title">${this._t('wifi_network_status')}</div>
     <div class="net-section">
       <div class="net-row"><span class="net-label">SSID:</span><span class="net-value" id="wifi-ssid">--</span></div>
       <div class="net-row"><span class="net-label">Status:</span><span class="net-value" id="wifi-status">--</span></div>
       <div class="net-row"><span class="net-label">Signal:</span><div class="net-value" id="wifi-signal-bars"></div></div>
     </div>
 
-    <div class="section-title">Cloud connection status</div>
+    <div class="section-title">${this._t('cloud_connection_status')}</div>
     <div class="net-section">
       <div class="net-row"><span class="net-label">Status:</span><span class="net-value" id="cloud-status">--</span></div>
     </div>
 
-    <div class="section-title">Wi-Fi device information</div>
+    <div class="section-title">${this._t('wifi_device_information')}</div>
     <div class="net-section">
       <div class="net-row"><span class="net-label">MAC:</span><span class="net-value" id="wifi-mac">--</span></div>
-      <div class="net-row"><span class="net-label">Firmware version</span><span class="net-value" id="wifi-fw">--</span></div>
+      <div class="net-row"><span class="net-label">${this._t('firmware_version')}</span><span class="net-value" id="wifi-fw">--</span></div>
     </div>
 
-    <div class="section-title">Network addresses</div>
+    <div class="section-title">${this._t('network_addresses')}</div>
     <div class="net-section">
       <div class="net-row"><span class="net-label">IP:</span><span class="net-value" id="wifi-ip">--</span></div>
     </div>
