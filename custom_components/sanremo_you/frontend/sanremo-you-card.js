@@ -306,12 +306,45 @@ class SanremoYouCard extends HTMLElement {
 
   getCardSize() { return 6; }
 
-  static getStubConfig() {
+  static getStubConfig(hass) {
+    // Auto-detect the first Sanremo YOU device
+    for (const entityId of Object.keys(hass?.states || {})) {
+      const match = entityId.match(/^sensor\.(.+)_machine_status$/);
+      if (match) return { entity_prefix: match[1] };
+    }
     return { entity_prefix: 'sanremo_you' };
   }
 
   static getConfigElement() {
     return document.createElement('sanremo-you-card-editor');
+  }
+
+  static getConfigForm() {
+    return {
+      schema: [
+        {
+          name: 'entity_prefix',
+          required: true,
+          selector: { text: {} },
+        },
+        {
+          name: 'name',
+          selector: { text: {} },
+        },
+      ],
+      computeLabel: (schema) => {
+        if (schema.name === 'entity_prefix') return 'Device prefix';
+        if (schema.name === 'name') return 'Card name (optional)';
+        return undefined;
+      },
+      computeHelper: (schema) => {
+        if (schema.name === 'entity_prefix')
+          return 'Entity prefix for your Sanremo YOU (e.g. sanremo_you)';
+        if (schema.name === 'name')
+          return 'Override the displayed machine name';
+        return undefined;
+      },
+    };
   }
 
   /* ── entity helpers ── */
