@@ -32,7 +32,6 @@ async def async_setup_entry(
 class SanremoYouSyncClockButton(SanremoYouEntity, ButtonEntity):
     """Button to sync the machine clock to the current time."""
 
-    _attr_name = "Sync Clock"
     _attr_translation_key = "sync_clock"
     _attr_icon = "mdi:clock-check"
 

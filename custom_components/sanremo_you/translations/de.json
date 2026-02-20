@@ -34,7 +34,12 @@
       "counter_continuous": { "name": "Dauerbezug Zähler" },
       "counter_paddle": { "name": "Hebel Zähler" },
       "counter_steam": { "name": "Dampf Zähler" },
-      "counter_tea": { "name": "Tee Zähler" }
+      "counter_tea": { "name": "Tee Zähler" },
+      "wifi_ssid": { "name": "WLAN SSID" },
+      "wifi_signal": { "name": "WLAN Signal" },
+      "ip_address": { "name": "IP-Adresse" },
+      "mac_address": { "name": "MAC-Adresse" },
+      "firmware_version": { "name": "Firmware-Version" }
     },
     "binary_sensor": {
       "water_tank": { "name": "Wassertank" }

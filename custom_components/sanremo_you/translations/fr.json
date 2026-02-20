@@ -34,7 +34,12 @@
       "counter_continuous": { "name": "Compteur Continu" },
       "counter_paddle": { "name": "Compteur Levier" },
       "counter_steam": { "name": "Compteur Vapeur" },
-      "counter_tea": { "name": "Compteur Thé" }
+      "counter_tea": { "name": "Compteur Thé" },
+      "wifi_ssid": { "name": "SSID WiFi" },
+      "wifi_signal": { "name": "Signal WiFi" },
+      "ip_address": { "name": "Adresse IP" },
+      "mac_address": { "name": "Adresse MAC" },
+      "firmware_version": { "name": "Version du firmware" }
     },
     "binary_sensor": {
       "water_tank": { "name": "Réservoir d'eau" }

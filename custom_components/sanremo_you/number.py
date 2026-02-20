@@ -38,7 +38,6 @@ NUMBER_DESCRIPTIONS: tuple[SanremoYouNumberDescription, ...] = (
     SanremoYouNumberDescription(
         key="coffee_boiler_setpoint",
         translation_key="coffee_boiler_setpoint",
-        name="Coffee Boiler Setpoint",
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         device_class=NumberDeviceClass.TEMPERATURE,
         native_min_value=80.0,
@@ -52,7 +51,6 @@ NUMBER_DESCRIPTIONS: tuple[SanremoYouNumberDescription, ...] = (
     SanremoYouNumberDescription(
         key="group_temp_setpoint",
         translation_key="group_temp_setpoint",
-        name="Group Temperature Setpoint",
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         device_class=NumberDeviceClass.TEMPERATURE,
         native_min_value=80.0,
@@ -66,7 +64,6 @@ NUMBER_DESCRIPTIONS: tuple[SanremoYouNumberDescription, ...] = (
     SanremoYouNumberDescription(
         key="steam_pressure_setpoint",
         translation_key="steam_pressure_setpoint",
-        name="Steam Pressure Setpoint",
         native_unit_of_measurement=UnitOfPressure.BAR,
         device_class=NumberDeviceClass.PRESSURE,
         native_min_value=0.5,

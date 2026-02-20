@@ -77,7 +77,6 @@ def _build_time_descriptions() -> tuple[SanremoYouTimeDescription, ...]:
             SanremoYouTimeDescription(
                 key=f"scheduler_slot_{slot_num}_start",
                 translation_key=f"scheduler_slot_{slot_num}_start",
-                name=f"Slot {slot_num} Start Time",
                 icon="mdi:clock-start",
                 slot_index=i,
                 is_start=True,
@@ -89,7 +88,6 @@ def _build_time_descriptions() -> tuple[SanremoYouTimeDescription, ...]:
             SanremoYouTimeDescription(
                 key=f"scheduler_slot_{slot_num}_stop",
                 translation_key=f"scheduler_slot_{slot_num}_stop",
-                name=f"Slot {slot_num} Stop Time",
                 icon="mdi:clock-end",
                 slot_index=i,
                 is_start=False,

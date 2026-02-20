@@ -39,7 +39,6 @@ async def async_setup_entry(
 class SanremoYouPowerSwitch(SanremoYouEntity, SwitchEntity):
     """Switch entity for Sanremo YOU power control."""
 
-    _attr_name = "Power"
     _attr_translation_key = "power"
     _attr_device_class = SwitchDeviceClass.SWITCH
     _attr_icon = "mdi:power"
@@ -72,7 +71,6 @@ class SanremoYouPowerSwitch(SanremoYouEntity, SwitchEntity):
 class SanremoYouSchedulerSwitch(SanremoYouEntity, SwitchEntity):
     """Switch entity for enabling/disabling the scheduler."""
 
-    _attr_name = "Scheduler"
     _attr_translation_key = "scheduler"
     _attr_icon = "mdi:calendar-clock"
 
@@ -114,7 +112,6 @@ class SanremoYouSlotEnabledSwitch(SanremoYouEntity, SwitchEntity):
         self._slot_idx = slot_idx
         slot_num = slot_idx + 1
         self._attr_unique_id = f"{entry_id}_scheduler_slot_{slot_num}_enabled"
-        self._attr_name = f"Slot {slot_num} Enabled"
         self._attr_translation_key = f"scheduler_slot_{slot_num}_enabled"
 
     @property
@@ -150,7 +147,6 @@ class SanremoYouSlotEcoSwitch(SanremoYouEntity, SwitchEntity):
         self._slot_idx = slot_idx
         slot_num = slot_idx + 1
         self._attr_unique_id = f"{entry_id}_scheduler_slot_{slot_num}_eco"
-        self._attr_name = f"Slot {slot_num} Eco Mode"
         self._attr_translation_key = f"scheduler_slot_{slot_num}_eco"
 
     @property

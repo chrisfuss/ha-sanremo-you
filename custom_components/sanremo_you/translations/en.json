@@ -34,7 +34,12 @@
       "counter_continuous": { "name": "Continuous Counter" },
       "counter_paddle": { "name": "Paddle Counter" },
       "counter_steam": { "name": "Steam Activation Counter" },
-      "counter_tea": { "name": "Tea Counter" }
+      "counter_tea": { "name": "Tea Counter" },
+      "wifi_ssid": { "name": "WiFi SSID" },
+      "wifi_signal": { "name": "WiFi Signal" },
+      "ip_address": { "name": "IP Address" },
+      "mac_address": { "name": "MAC Address" },
+      "firmware_version": { "name": "Firmware Version" }
     },
     "binary_sensor": {
       "water_tank": { "name": "Water Tank" }

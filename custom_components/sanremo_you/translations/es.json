@@ -34,7 +34,12 @@
       "counter_continuous": { "name": "Contador Continuo" },
       "counter_paddle": { "name": "Contador Palanca" },
       "counter_steam": { "name": "Contador Vapor" },
-      "counter_tea": { "name": "Contador Té" }
+      "counter_tea": { "name": "Contador Té" },
+      "wifi_ssid": { "name": "SSID WiFi" },
+      "wifi_signal": { "name": "Señal WiFi" },
+      "ip_address": { "name": "Dirección IP" },
+      "mac_address": { "name": "Dirección MAC" },
+      "firmware_version": { "name": "Versión de firmware" }
     },
     "binary_sensor": {
       "water_tank": { "name": "Depósito de agua" }

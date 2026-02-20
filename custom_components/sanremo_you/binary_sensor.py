@@ -30,7 +30,7 @@ async def async_setup_entry(
 class SanremoYouWaterTankSensor(SanremoYouEntity, BinarySensorEntity):
     """Binary sensor for the water tank level."""
 
-    _attr_name = "Water Tank"
+    _attr_translation_key = "water_tank"
     _attr_device_class = BinarySensorDeviceClass.PROBLEM
     _attr_icon = "mdi:water"
 
