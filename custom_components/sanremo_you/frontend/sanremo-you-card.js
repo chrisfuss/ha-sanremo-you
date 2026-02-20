@@ -1,3 +1,118 @@
+/* ── Config Editor ── */
+class SanremoYouCardEditor extends HTMLElement {
+  constructor() {
+    super();
+    this._config = {};
+    this._hass = null;
+    this._root = this.attachShadow({ mode: 'open' });
+  }
+
+  set hass(hass) {
+    this._hass = hass;
+    this._render();
+  }
+
+  setConfig(config) {
+    this._config = { ...config };
+    this._render();
+  }
+
+  _getDevices() {
+    if (!this._hass) return [];
+    const devices = [];
+    const seen = new Set();
+    for (const entityId of Object.keys(this._hass.states)) {
+      const match = entityId.match(/^sensor\.(.+)_machine_status$/);
+      if (match && !seen.has(match[1])) {
+        seen.add(match[1]);
+        const friendlyName = this._hass.states[entityId].attributes.friendly_name || match[1];
+        devices.push({
+          prefix: match[1],
+          name: friendlyName.replace(' Machine Status', '')
+        });
+      }
+    }
+    return devices;
+  }
+
+  _render() {
+    if (!this._hass) return;
+    const devices = this._getDevices();
+    const currentPrefix = this._config.entity_prefix || 'sanremo_you';
+    const currentName = this._config.name || '';
+
+    this._root.innerHTML = `
+      <style>
+        :host { display: block; }
+        .editor { padding: 16px; }
+        .field { margin-bottom: 16px; }
+        .field label {
+          display: block; font-weight: 500; margin-bottom: 6px;
+          font-size: 14px; color: var(--primary-text-color);
+        }
+        .field .desc {
+          font-size: 12px; color: var(--secondary-text-color);
+          margin-bottom: 6px;
+        }
+        select, input {
+          width: 100%; padding: 8px 12px; border-radius: 8px;
+          border: 1px solid var(--divider-color, #ccc);
+          background: var(--card-background-color, #fff);
+          color: var(--primary-text-color);
+          font-size: 14px; box-sizing: border-box;
+          outline: none;
+        }
+        select:focus, input:focus {
+          border-color: var(--primary-color);
+        }
+      </style>
+      <div class="editor">
+        <div class="field">
+          <label>Coffee Machine</label>
+          <div class="desc">Select your Sanremo YOU device</div>
+          <select id="prefix">
+            ${devices.length === 0
+              ? `<option value="${currentPrefix}">${currentPrefix}</option>`
+              : devices.map(d =>
+                  `<option value="${d.prefix}" ${d.prefix === currentPrefix ? 'selected' : ''}>${d.name}</option>`
+                ).join('')
+            }
+          </select>
+        </div>
+        <div class="field">
+          <label>Card Name (optional)</label>
+          <div class="desc">Override the displayed machine name</div>
+          <input type="text" id="name" value="${currentName}" placeholder="Auto-detected from device">
+        </div>
+      </div>`;
+
+    this._root.getElementById('prefix').addEventListener('change', (e) => {
+      this._config = { ...this._config, entity_prefix: e.target.value };
+      this._fireChanged();
+    });
+    this._root.getElementById('name').addEventListener('input', (e) => {
+      const val = e.target.value.trim();
+      if (val) {
+        this._config = { ...this._config, name: val };
+      } else {
+        const { name, ...rest } = this._config;
+        this._config = rest;
+      }
+      this._fireChanged();
+    });
+  }
+
+  _fireChanged() {
+    this.dispatchEvent(new CustomEvent('config-changed', {
+      bubbles: true, composed: true,
+      detail: { config: this._config }
+    }));
+  }
+}
+
+customElements.define('sanremo-you-card-editor', SanremoYouCardEditor);
+
+/* ── Main Card ── */
 class SanremoYouCard extends HTMLElement {
   constructor() {
     super();
@@ -33,6 +148,10 @@ class SanremoYouCard extends HTMLElement {
 
   static getStubConfig() {
     return { entity_prefix: 'sanremo_you' };
+  }
+
+  static getConfigElement() {
+    return document.createElement('sanremo-you-card-editor');
   }
 
   /* ── entity helpers ── */
