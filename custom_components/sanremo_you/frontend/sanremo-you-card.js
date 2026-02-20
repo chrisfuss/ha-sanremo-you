@@ -162,6 +162,12 @@ class SanremoYouCardEditor extends HTMLElement {
     this._root = this.attachShadow({ mode: 'open' });
   }
 
+  connectedCallback() {
+    if (!this._root.hasChildNodes()) {
+      this._render();
+    }
+  }
+
   set hass(hass) {
     this._hass = hass;
     this._render();
@@ -191,10 +197,10 @@ class SanremoYouCardEditor extends HTMLElement {
   }
 
   _render() {
-    if (!this._hass) return;
     const devices = this._getDevices();
     const currentPrefix = this._config.entity_prefix || 'sanremo_you';
     const currentName = this._config.name || '';
+    const lang = this._hass?.language;
 
     this._root.innerHTML = `
       <style>
@@ -223,8 +229,8 @@ class SanremoYouCardEditor extends HTMLElement {
       </style>
       <div class="editor">
         <div class="field">
-          <label>${_t(this._hass?.language, 'coffee_machine')}</label>
-          <div class="desc">${_t(this._hass?.language, 'select_device')}</div>
+          <label>${_t(lang, 'coffee_machine')}</label>
+          <div class="desc">${_t(lang, 'select_device')}</div>
           <select id="prefix">
             ${devices.length === 0
               ? `<option value="${currentPrefix}">${currentPrefix}</option>`
@@ -235,9 +241,9 @@ class SanremoYouCardEditor extends HTMLElement {
           </select>
         </div>
         <div class="field">
-          <label>${_t(this._hass?.language, 'card_name')}</label>
-          <div class="desc">${_t(this._hass?.language, 'card_name_desc')}</div>
-          <input type="text" id="name" value="${currentName}" placeholder="${_t(this._hass?.language, 'card_name_placeholder')}">
+          <label>${_t(lang, 'card_name')}</label>
+          <div class="desc">${_t(lang, 'card_name_desc')}</div>
+          <input type="text" id="name" value="${currentName}" placeholder="${_t(lang, 'card_name_placeholder')}">
         </div>
       </div>`;
 
