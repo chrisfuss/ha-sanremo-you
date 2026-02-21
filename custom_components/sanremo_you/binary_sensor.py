@@ -38,6 +38,7 @@ class SanremoYouWaterTankSensor(SanremoYouEntity, BinarySensorEntity):
         """Initialize the binary sensor."""
         super().__init__(coordinator, entry_id)
         self._attr_unique_id = f"{entry_id}_water_tank"
+        self._object_id_key = "water_tank"
 
     @property
     def is_on(self) -> bool:

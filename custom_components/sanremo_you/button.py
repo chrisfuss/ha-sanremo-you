@@ -39,6 +39,7 @@ class SanremoYouSyncClockButton(SanremoYouEntity, ButtonEntity):
         """Initialize the sync clock button."""
         super().__init__(coordinator, entry_id)
         self._attr_unique_id = f"{entry_id}_sync_clock"
+        self._object_id_key = "sync_clock"
 
     async def async_press(self) -> None:
         """Sync the machine clock to the current HA time."""

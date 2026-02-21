@@ -129,6 +129,7 @@ class SanremoYouTime(SanremoYouEntity, TimeEntity):
         super().__init__(coordinator, entry_id)
         self.entity_description = description
         self._attr_unique_id = f"{entry_id}_{description.key}"
+        self._object_id_key = description.key
 
     @property
     def native_value(self) -> time | None:

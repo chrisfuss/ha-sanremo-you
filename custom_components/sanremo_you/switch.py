@@ -47,6 +47,7 @@ class SanremoYouPowerSwitch(SanremoYouEntity, SwitchEntity):
         """Initialize the switch."""
         super().__init__(coordinator, entry_id)
         self._attr_unique_id = f"{entry_id}_power"
+        self._object_id_key = "power"
 
     @property
     def is_on(self) -> bool:
@@ -78,6 +79,7 @@ class SanremoYouSchedulerSwitch(SanremoYouEntity, SwitchEntity):
         """Initialize the scheduler switch."""
         super().__init__(coordinator, entry_id)
         self._attr_unique_id = f"{entry_id}_scheduler"
+        self._object_id_key = "scheduler"
 
     @property
     def is_on(self) -> bool | None:
@@ -113,6 +115,7 @@ class SanremoYouSlotEnabledSwitch(SanremoYouEntity, SwitchEntity):
         slot_num = slot_idx + 1
         self._attr_unique_id = f"{entry_id}_scheduler_slot_{slot_num}_enabled"
         self._attr_translation_key = f"scheduler_slot_{slot_num}_enabled"
+        self._object_id_key = f"scheduler_slot_{slot_num}_enabled"
 
     @property
     def is_on(self) -> bool | None:
@@ -148,6 +151,7 @@ class SanremoYouSlotEcoSwitch(SanremoYouEntity, SwitchEntity):
         slot_num = slot_idx + 1
         self._attr_unique_id = f"{entry_id}_scheduler_slot_{slot_num}_eco"
         self._attr_translation_key = f"scheduler_slot_{slot_num}_eco"
+        self._object_id_key = f"scheduler_slot_{slot_num}_eco"
 
     @property
     def is_on(self) -> bool | None:
