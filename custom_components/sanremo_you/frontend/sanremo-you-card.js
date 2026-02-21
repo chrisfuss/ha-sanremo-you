@@ -292,7 +292,7 @@ class SanremoYouCard extends HTMLElement {
   }
 
   set hass(hass) {
-    const langChanged = this._hass && hass.language !== this._hass.language;
+    const langChanged = !this._hass || hass.language !== this._hass.language;
     this._hass = hass;
     if (!this._initialized) return;
     if (langChanged) {
@@ -453,7 +453,7 @@ class SanremoYouCard extends HTMLElement {
     this._$('steam-set').textContent = steamSet ? `/ ${parseFloat(steamSet.state).toFixed(1)} ${this._t('set')}` : '';
 
     const temp = this._s('group_temperature');
-    const tempSet = this._n('group_temperature_setpoint');
+    const tempSet = this._n('group_temp_setpoint');
     this._$('temp-val').textContent = temp ? parseFloat(temp.state).toFixed(1) : '--';
     this._$('temp-set').textContent = tempSet ? `/ ${parseFloat(tempSet.state).toFixed(1)} ${this._t('set')}` : '';
 
@@ -476,7 +476,7 @@ class SanremoYouCard extends HTMLElement {
 
     const ext = this._s('extraction_time');
     this._$('ext-val').textContent = ext ? parseFloat(ext.state).toFixed(1) + ' sec' : '-- sec';
-    const daily = this._s('daily_shot_count');
+    const daily = this._s('daily_shots');
     this._$('daily-val').textContent = daily ? String(daily.state).padStart(3, '0') + ` ${this._t('current')}` : '---';
   }
 
@@ -501,13 +501,13 @@ class SanremoYouCard extends HTMLElement {
 
   _updateCounters() {
     const counters = [
-      ['cnt-dose1', 'dose_1_counter', 3],
-      ['cnt-dose2', 'dose_2_counter', 3],
-      ['cnt-dose3', 'dose_3_counter', 3],
-      ['cnt-cont',  'continuous_counter', 3],
-      ['cnt-paddle','paddle_counter', 5],
-      ['cnt-steam', 'steam_activation_counter', 5],
-      ['cnt-tea',   'tea_counter', 5],
+      ['cnt-dose1', 'counter_dose_1', 3],
+      ['cnt-dose2', 'counter_dose_2', 3],
+      ['cnt-dose3', 'counter_dose_3', 3],
+      ['cnt-cont',  'counter_continuous', 3],
+      ['cnt-paddle','counter_paddle', 5],
+      ['cnt-steam', 'counter_steam', 5],
+      ['cnt-tea',   'counter_tea', 5],
     ];
     counters.forEach(([id, suffix, pad]) => {
       const e = this._s(suffix);
@@ -525,7 +525,7 @@ class SanremoYouCard extends HTMLElement {
 
   _updateUserSettings() {
     const cb = this._n('coffee_boiler_setpoint');
-    const gt = this._n('group_temperature_setpoint');
+    const gt = this._n('group_temp_setpoint');
     const sp = this._n('steam_pressure_setpoint');
     this._$('us-coffee-val').textContent = cb ? `${parseFloat(cb.state).toFixed(1)} °C` : '--';
     this._$('us-group-val').textContent = gt ? `${parseFloat(gt.state).toFixed(1)} °C` : '--';
@@ -535,7 +535,7 @@ class SanremoYouCard extends HTMLElement {
   _updateSetpointView(view) {
     const map = {
       'setpoint-coffee': ['coffee_boiler_setpoint', 'sp-coffee-val', '°C'],
-      'setpoint-group':  ['group_temperature_setpoint', 'sp-group-val', '°C'],
+      'setpoint-group':  ['group_temp_setpoint', 'sp-group-val', '°C'],
       'setpoint-steam':  ['steam_pressure_setpoint', 'sp-steam-val', 'BAR'],
     };
     const [suffix, elId, unit] = map[view] || [];
@@ -603,10 +603,10 @@ class SanremoYouCard extends HTMLElement {
       this._hass?.callService('switch', 'toggle', { entity_id: `switch.${p}_power` });
     });
     this._$('gauge-steam').addEventListener('click', () => this._fire(`number.${p}_steam_pressure_setpoint`));
-    this._$('gauge-temp').addEventListener('click', () => this._fire(`number.${p}_group_temperature_setpoint`));
+    this._$('gauge-temp').addEventListener('click', () => this._fire(`number.${p}_group_temp_setpoint`));
     this._$('gauge-tank').addEventListener('click', () => this._fire(`binary_sensor.${p}_water_tank`));
     this._$('cell-ext').addEventListener('click', () => this._fire(`sensor.${p}_extraction_time`));
-    this._$('cell-daily').addEventListener('click', () => this._fire(`sensor.${p}_daily_shot_count`));
+    this._$('cell-daily').addEventListener('click', () => this._fire(`sensor.${p}_daily_shots`));
     this._$('ib-eco').addEventListener('click', () => this._fire(`sensor.${p}_machine_status`));
     this._$('ib-power').addEventListener('click', () => this._fire(`switch.${p}_power`));
     this._$('ib-sched').addEventListener('click', () => this._fire(`switch.${p}_scheduler`));
@@ -643,7 +643,7 @@ class SanremoYouCard extends HTMLElement {
     /* programming: slot rows → more-info */
     for (let i = 1; i <= 6; i++) {
       this._$(`slot-row-${i}`).addEventListener('click', () =>
-        this._fire(`time.${p}_slot_${i}_start_time`)
+        this._fire(`time.${p}_scheduler_slot_${i}_start`)
       );
     }
 
@@ -661,8 +661,8 @@ class SanremoYouCard extends HTMLElement {
     /* setpoint +/- buttons */
     this._$('sp-coffee-minus').addEventListener('click', () => this._adjustSetpoint('coffee_boiler_setpoint', -1));
     this._$('sp-coffee-plus').addEventListener('click', () => this._adjustSetpoint('coffee_boiler_setpoint', 1));
-    this._$('sp-group-minus').addEventListener('click', () => this._adjustSetpoint('group_temperature_setpoint', -1));
-    this._$('sp-group-plus').addEventListener('click', () => this._adjustSetpoint('group_temperature_setpoint', 1));
+    this._$('sp-group-minus').addEventListener('click', () => this._adjustSetpoint('group_temp_setpoint', -1));
+    this._$('sp-group-plus').addEventListener('click', () => this._adjustSetpoint('group_temp_setpoint', 1));
     this._$('sp-steam-minus').addEventListener('click', () => this._adjustSetpoint('steam_pressure_setpoint', -1));
     this._$('sp-steam-plus').addEventListener('click', () => this._adjustSetpoint('steam_pressure_setpoint', 1));
 
