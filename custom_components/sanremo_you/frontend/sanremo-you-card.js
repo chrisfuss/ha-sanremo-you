@@ -280,10 +280,11 @@ class SanremoYouCard extends HTMLElement {
   setConfig(config) {
     this._config = config;
     this._prefix = config.entity_prefix || 'sanremo_you';
-    if (!this._initialized) {
+    if (this._initialized) {
+      // Rebuild if config changes after initial setup
       this._buildDOM();
       this._attachListeners();
-      this._initialized = true;
+      this._update();
     }
     if (config.name) {
       const el = this._root.getElementById('machine-name');
@@ -294,8 +295,13 @@ class SanremoYouCard extends HTMLElement {
   set hass(hass) {
     const langChanged = !this._hass || hass.language !== this._hass.language;
     this._hass = hass;
-    if (!this._initialized) return;
-    if (langChanged) {
+    if (!this._config) return;
+    if (!this._initialized) {
+      // First build: now we have both config and hass (with language)
+      this._buildDOM();
+      this._attachListeners();
+      this._initialized = true;
+    } else if (langChanged) {
       this._buildDOM();
       this._attachListeners();
     }
@@ -433,7 +439,7 @@ class SanremoYouCard extends HTMLElement {
   _updateMain(status, statusVal, isAvail, power, isOn, isEco, sched, warns, alarms, hasAlarm, hasWarn) {
     const nameEl = this._$('machine-name');
     if (!this._config?.name && nameEl) {
-      nameEl.textContent = status?.attributes?.friendly_name?.replace(' Machine Status', '') || 'SANREMO-YOU';
+      nameEl.textContent = status?.attributes?.friendly_name?.replace(/ Machine Status$| Maschinenstatus$| État de la machine$| Estado de la máquina$/, '') || 'SANREMO-YOU';
     }
     const conn = this._$('connectivity');
     conn.textContent = isAvail ? statusVal : this._t('disconnected');
