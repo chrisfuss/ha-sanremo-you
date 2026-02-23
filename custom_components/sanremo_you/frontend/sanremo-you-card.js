@@ -457,11 +457,15 @@ class SanremoYouCard extends HTMLElement {
     const steamSet = this._n('steam_pressure_setpoint');
     this._$('steam-val').textContent = steam ? parseFloat(steam.state).toFixed(2) : '--';
     this._$('steam-set').textContent = steamSet ? `/ ${parseFloat(steamSet.state).toFixed(1)} ${this._t('set')}` : '';
+    const steamUnit = this._$('steam-unit');
+    if (steamUnit) steamUnit.textContent = steam?.attributes?.unit_of_measurement || 'bar';
 
     const temp = this._s('group_temperature');
     const tempSet = this._n('group_temp_setpoint');
     this._$('temp-val').textContent = temp ? parseFloat(temp.state).toFixed(1) : '--';
     this._$('temp-set').textContent = tempSet ? `/ ${parseFloat(tempSet.state).toFixed(1)} ${this._t('set')}` : '';
+    const tempUnit = this._$('temp-unit');
+    if (tempUnit) tempUnit.textContent = temp?.attributes?.unit_of_measurement || '°C';
 
     const tank = this._b('water_tank');
     const tankLow = tank?.state === 'on';
@@ -533,21 +537,22 @@ class SanremoYouCard extends HTMLElement {
     const cb = this._n('coffee_boiler_setpoint');
     const gt = this._n('group_temp_setpoint');
     const sp = this._n('steam_pressure_setpoint');
-    this._$('us-coffee-val').textContent = cb ? `${parseFloat(cb.state).toFixed(1)} °C` : '--';
-    this._$('us-group-val').textContent = gt ? `${parseFloat(gt.state).toFixed(1)} °C` : '--';
-    this._$('us-steam-val').textContent = sp ? `${parseFloat(sp.state).toFixed(1)} BAR` : '--';
+    this._$('us-coffee-val').textContent = cb ? `${parseFloat(cb.state).toFixed(1)} ${cb.attributes?.unit_of_measurement || '°C'}` : '--';
+    this._$('us-group-val').textContent = gt ? `${parseFloat(gt.state).toFixed(1)} ${gt.attributes?.unit_of_measurement || '°C'}` : '--';
+    this._$('us-steam-val').textContent = sp ? `${parseFloat(sp.state).toFixed(1)} ${sp.attributes?.unit_of_measurement || 'bar'}` : '--';
   }
 
   _updateSetpointView(view) {
     const map = {
-      'setpoint-coffee': ['coffee_boiler_setpoint', 'sp-coffee-val', '°C'],
-      'setpoint-group':  ['group_temp_setpoint', 'sp-group-val', '°C'],
-      'setpoint-steam':  ['steam_pressure_setpoint', 'sp-steam-val', 'BAR'],
+      'setpoint-coffee': ['coffee_boiler_setpoint', 'sp-coffee-val'],
+      'setpoint-group':  ['group_temp_setpoint', 'sp-group-val'],
+      'setpoint-steam':  ['steam_pressure_setpoint', 'sp-steam-val'],
     };
-    const [suffix, elId, unit] = map[view] || [];
+    const [suffix, elId] = map[view] || [];
     if (!suffix) return;
     const e = this._n(suffix);
     const el = this._$(elId);
+    const unit = e?.attributes?.unit_of_measurement || '';
     if (el) el.innerHTML = e
       ? `${parseFloat(e.state).toFixed(1)}<span class="sp-unit">${unit}</span>`
       : '--';
@@ -838,7 +843,7 @@ class SanremoYouCard extends HTMLElement {
         <div class="g-icon"><ha-icon icon="mdi:gauge"></ha-icon></div>
         <div class="g-label">${this._t('steam')}</div>
         <div class="g-value" id="steam-val">--</div>
-        <div class="g-unit">bar</div>
+        <div class="g-unit" id="steam-unit">bar</div>
         <div class="g-setpoint" id="steam-set"></div>
       </div>
       <div class="gauge" id="gauge-tank">
@@ -851,7 +856,7 @@ class SanremoYouCard extends HTMLElement {
         <div class="g-icon"><ha-icon icon="mdi:coffee"></ha-icon></div>
         <div class="g-label">${this._t('infusion')}</div>
         <div class="g-value" id="temp-val">--</div>
-        <div class="g-unit">°C</div>
+        <div class="g-unit" id="temp-unit">°C</div>
         <div class="g-setpoint" id="temp-set"></div>
       </div>
     </div>
