@@ -35,14 +35,27 @@
       "counter_paddle": { "name": "Compteur Levier" },
       "counter_steam": { "name": "Compteur Vapeur" },
       "counter_tea": { "name": "Compteur Thé" },
+      "counter_total": { "name": "Compteur Total" },
+      "group_status": { "name": "État du groupe" },
+      "status_phase": { "name": "Phase d'extraction" },
+      "realtime_flow": { "name": "Débit" },
+      "counter_vol": { "name": "Compteur volume" },
+      "set_press_paddle": { "name": "Pression levier" },
+      "cup_weight": { "name": "Poids de la tasse" },
+      "recipe_weight_setpoint": { "name": "Poids cible recette" },
+      "scale_flow_rate": { "name": "Débit balance" },
       "wifi_ssid": { "name": "SSID WiFi" },
       "wifi_signal": { "name": "Signal WiFi" },
       "ip_address": { "name": "Adresse IP" },
       "mac_address": { "name": "Adresse MAC" },
-      "firmware_version": { "name": "Version du firmware" }
+      "firmware_version": { "name": "Version du firmware" },
+      "free_memory": { "name": "Mémoire libre" }
     },
     "binary_sensor": {
-      "water_tank": { "name": "Réservoir d'eau" }
+      "water_tank": { "name": "Réservoir d'eau" },
+      "scale_connection": { "name": "Balance connectée" },
+      "websocket_connected": { "name": "WebSocket connecté" },
+      "ota_available": { "name": "Mise à jour disponible" }
     },
     "switch": {
       "power": { "name": "Marche/Arrêt" },
@@ -63,7 +76,11 @@
     "number": {
       "coffee_boiler_setpoint": { "name": "Consigne chaudière café" },
       "group_temp_setpoint": { "name": "Consigne température groupe" },
-      "steam_pressure_setpoint": { "name": "Consigne pression vapeur" }
+      "steam_pressure_setpoint": { "name": "Consigne pression vapeur" },
+      "dose_key1": { "name": "Réglage Dose 1" },
+      "dose_key2": { "name": "Réglage Dose 2" },
+      "dose_key3": { "name": "Réglage Dose 3" },
+      "dose_tea": { "name": "Réglage Dose Thé" }
     },
     "time": {
       "scheduler_slot_1_start": { "name": "Créneau 1 Heure de début" },
@@ -80,7 +97,12 @@
       "scheduler_slot_6_stop": { "name": "Créneau 6 Heure de fin" }
     },
     "button": {
-      "sync_clock": { "name": "Synchroniser l'horloge" }
+      "sync_clock": { "name": "Synchroniser l'horloge" },
+      "start_shot_p1": { "name": "Démarrer Profil 1" },
+      "start_shot_p2": { "name": "Démarrer Profil 2" },
+      "start_shot_p3": { "name": "Démarrer Profil 3" },
+      "start_shot_manual": { "name": "Démarrer Manuel" },
+      "stop_shot": { "name": "Arrêter l'extraction" }
     }
   }
 }

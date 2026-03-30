@@ -11,7 +11,7 @@ JSMODULES: Final[list[dict[str, str]]] = [
     {
         "name": "Sanremo YOU Card",
         "filename": "sanremo-you-card.js",
-        "version": "1.0.12",
+        "version": "1.0.15",
     },
 ]
 DEFAULT_PORT = 80
@@ -23,6 +23,7 @@ API_PATH = "/ajax/post"
 # API keys for POST requests
 API_KEY_GET_DEVICE_INFO = "105"
 API_KEY_GET_SYSTEM_PARAMS = "150"
+API_KEY_GET_LIGHTWEIGHT_STATUS = "151"
 API_KEY_SET_VALUE = "200"
 API_KEY_SET_CLOCK = "249"
 API_KEY_SET_SCHEDULER_DAY_STATUS = "250"
@@ -48,9 +49,13 @@ STATUS_IDX_HEATER_TEMP = 16
 STATUS_IDX_SERVICE_HEATER_TEMP = 17
 STATUS_IDX_SERVICE_HEATER_PRESSURE = 18
 STATUS_IDX_PUMP_PRESSURE = 19
+STATUS_IDX_STATUS_PHASE = 10
 STATUS_IDX_DOSE_TIME = 22
 STATUS_IDX_LEVEL_SENSOR = 23
 STATUS_IDX_DEEP_SLEEP = 29
+STATUS_IDX_COUNTER_VOL = 20
+STATUS_IDX_REALTIME_FLOW = 30
+STATUS_IDX_SET_PRESS_PADDLE = 31
 
 # Settings array indices
 SETTINGS_IDX_STEAM_HEATER_SETPOINT = 0
@@ -115,3 +120,39 @@ DAY_FRIDAY = 4
 DAY_SATURDAY = 5
 DAY_SUNDAY = 6
 DAY_ECO_BIT = 7
+
+# ── New REST API endpoints (firmware 0.12+) ──
+API_PATH_RUNTIME = "/api/runtime"
+API_PATH_ACTION_ON = "/api/action/on"
+API_PATH_ACTION_STANDBY = "/api/action/standby"
+API_PATH_ACTION_PREFIX = "/api/action"
+API_PATH_DOSES = "/api/doses"
+API_PATH_COUNTERS = "/api/counters"
+
+# WebSocket
+WS_PORT: Final[int] = 81
+WS_THROTTLE_SECONDS: Final[float] = 1.0
+WS_RECONNECT_SECONDS: Final[int] = 5
+
+# Group status values (from WebSocket groupStatus field)
+GROUP_STATUS_IDLE = 0
+GROUP_STATUS_P1 = 1
+GROUP_STATUS_P2 = 2
+GROUP_STATUS_P3 = 3
+GROUP_STATUS_MANUAL = 4
+
+GROUP_STATUS_MAP = {
+    0: "Idle",
+    1: "Profile 1",
+    2: "Profile 2",
+    3: "Profile 3",
+    4: "Manual",
+}
+
+# Shot mode strings for /api/action/{mode}/start|stop
+SHOT_MODE_MAP = {
+    GROUP_STATUS_P1: "p1",
+    GROUP_STATUS_P2: "p2",
+    GROUP_STATUS_P3: "p3",
+    GROUP_STATUS_MANUAL: "man",
+}

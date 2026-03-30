@@ -35,14 +35,27 @@
       "counter_paddle": { "name": "Hebel Zähler" },
       "counter_steam": { "name": "Dampf Zähler" },
       "counter_tea": { "name": "Tee Zähler" },
+      "counter_total": { "name": "Gesamtzähler" },
+      "group_status": { "name": "Gruppenstatus" },
+      "status_phase": { "name": "Brühphase" },
+      "realtime_flow": { "name": "Durchflussrate" },
+      "counter_vol": { "name": "Volumenzähler" },
+      "set_press_paddle": { "name": "Hebeldruck" },
+      "cup_weight": { "name": "Tassengewicht" },
+      "recipe_weight_setpoint": { "name": "Rezept-Zielgewicht" },
+      "scale_flow_rate": { "name": "Waagen-Durchfluss" },
       "wifi_ssid": { "name": "WLAN SSID" },
       "wifi_signal": { "name": "WLAN Signal" },
       "ip_address": { "name": "IP-Adresse" },
       "mac_address": { "name": "MAC-Adresse" },
-      "firmware_version": { "name": "Firmware-Version" }
+      "firmware_version": { "name": "Firmware-Version" },
+      "free_memory": { "name": "Freier Speicher" }
     },
     "binary_sensor": {
-      "water_tank": { "name": "Wassertank" }
+      "water_tank": { "name": "Wassertank" },
+      "scale_connection": { "name": "Waage verbunden" },
+      "websocket_connected": { "name": "WebSocket verbunden" },
+      "ota_available": { "name": "Firmware-Update verfügbar" }
     },
     "switch": {
       "power": { "name": "Ein/Aus" },
@@ -63,7 +76,11 @@
     "number": {
       "coffee_boiler_setpoint": { "name": "Kaffeeboiler Sollwert" },
       "group_temp_setpoint": { "name": "Brühgruppe Sollwert" },
-      "steam_pressure_setpoint": { "name": "Dampfdruck Sollwert" }
+      "steam_pressure_setpoint": { "name": "Dampfdruck Sollwert" },
+      "dose_key1": { "name": "Dosis 1 Einstellung" },
+      "dose_key2": { "name": "Dosis 2 Einstellung" },
+      "dose_key3": { "name": "Dosis 3 Einstellung" },
+      "dose_tea": { "name": "Tee-Dosis Einstellung" }
     },
     "time": {
       "scheduler_slot_1_start": { "name": "Zeitfenster 1 Startzeit" },
@@ -80,7 +97,12 @@
       "scheduler_slot_6_stop": { "name": "Zeitfenster 6 Stoppzeit" }
     },
     "button": {
-      "sync_clock": { "name": "Uhr synchronisieren" }
+      "sync_clock": { "name": "Uhr synchronisieren" },
+      "start_shot_p1": { "name": "Profil 1 starten" },
+      "start_shot_p2": { "name": "Profil 2 starten" },
+      "start_shot_p3": { "name": "Profil 3 starten" },
+      "start_shot_manual": { "name": "Manuell starten" },
+      "stop_shot": { "name": "Bezug stoppen" }
     }
   }
 }

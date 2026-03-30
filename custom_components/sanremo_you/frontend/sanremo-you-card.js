@@ -6,10 +6,17 @@ const _TRANSLATIONS = {
     steam: 'Steam', tank: 'Tank', infusion: 'Infusion',
     extraction: 'Extraction', daily: 'Daily', current: 'current',
     set: 'set', low: 'LOW', ok: 'OK',
+    // Brewing / Shot control
+    brewing: 'Brewing', idle: 'Idle',
+    profile_1: 'P1', profile_2: 'P2', profile_3: 'P3', manual: 'MAN',
+    stop: 'STOP', flow_rate: 'Flow', pressure: 'Pressure',
+    weight: 'Weight', volume: 'Vol', target: 'target',
+    scale: 'Scale',
     // Settings menu
     wifi_network_status: 'Wi-Fi network status',
     programming: 'Programming', counters: 'Counters',
     alarms: 'Alarms', user_settings: 'User Settings',
+    dose_settings: 'Dose Settings',
     // Programming
     time_slot: 'Time slot',
     // Counters
@@ -17,6 +24,7 @@ const _TRANSLATIONS = {
     dose_1: 'Dose 1', dose_2: 'Dose 2', dose_3: 'Dose 3',
     continuous: 'Continuous', paddle: 'Paddle',
     steam_activation: 'Steam Activation', tea: 'Tea',
+    total: 'Total',
     // Alarms
     active_alarms: 'Active alarms',
     no_active_alarm: 'No active alarm', no_active_warning: 'No active warning',
@@ -29,14 +37,20 @@ const _TRANSLATIONS = {
     coffee_boiler_settings: 'Coffee boiler settings',
     filter_holder_settings: 'Coffee filter holder settings',
     steam_boiler_settings: 'Steam boiler settings',
+    // Doses
+    dose_1_setting: 'Dose 1', dose_2_setting: 'Dose 2', dose_3_setting: 'Dose 3',
+    tea_dose_setting: 'Tea Dose',
     // Clock
     clock: 'Clock', sync_clock: 'Sync Clock',
-    // Wi-Fi
+    // Wi-Fi / Diagnostics
     cloud_connection_status: 'Cloud connection status',
     wifi_device_information: 'Wi-Fi device information',
     firmware_version: 'Firmware version',
     network_addresses: 'Network addresses',
     ip_obtained_connected: 'Ip obtained [Connected]',
+    free_memory: 'Free memory', update_available: 'Update available',
+    no_update: 'Up to date', websocket: 'WebSocket', realtime: 'Real-time',
+    diagnostics: 'Diagnostics',
     // Config editor
     coffee_machine: 'Coffee Machine',
     select_device: 'Select your Sanremo YOU device',
@@ -49,14 +63,21 @@ const _TRANSLATIONS = {
     steam: 'Dampf', tank: 'Tank', infusion: 'Brühung',
     extraction: 'Extraktion', daily: 'Heute', current: 'aktuell',
     set: 'Soll', low: 'NIEDRIG', ok: 'OK',
+    brewing: 'Brühen', idle: 'Bereit',
+    profile_1: 'P1', profile_2: 'P2', profile_3: 'P3', manual: 'MAN',
+    stop: 'STOPP', flow_rate: 'Fluss', pressure: 'Druck',
+    weight: 'Gewicht', volume: 'Vol', target: 'Ziel',
+    scale: 'Waage',
     wifi_network_status: 'WLAN-Netzwerkstatus',
     programming: 'Programmierung', counters: 'Zähler',
     alarms: 'Alarme', user_settings: 'Einstellungen',
+    dose_settings: 'Dosierungen',
     time_slot: 'Zeitfenster',
     coffee_counters: 'Kaffeezähler',
     dose_1: 'Dosis 1', dose_2: 'Dosis 2', dose_3: 'Dosis 3',
     continuous: 'Dauerbezug', paddle: 'Hebel',
     steam_activation: 'Dampf', tea: 'Tee',
+    total: 'Gesamt',
     active_alarms: 'Aktive Alarme',
     no_active_alarm: 'Kein aktiver Alarm', no_active_warning: 'Keine aktive Warnung',
     coffee_boiler_temperature: 'Kaffeeboiler-Temperatur',
@@ -66,12 +87,17 @@ const _TRANSLATIONS = {
     coffee_boiler_settings: 'Kaffeeboiler-Einstellungen',
     filter_holder_settings: 'Siebträger-Einstellungen',
     steam_boiler_settings: 'Dampfkessel-Einstellungen',
+    dose_1_setting: 'Dosis 1', dose_2_setting: 'Dosis 2', dose_3_setting: 'Dosis 3',
+    tea_dose_setting: 'Tee-Dosis',
     clock: 'Uhr', sync_clock: 'Uhr synchronisieren',
     cloud_connection_status: 'Cloud-Verbindungsstatus',
     wifi_device_information: 'WLAN-Geräteinformationen',
     firmware_version: 'Firmware-Version',
     network_addresses: 'Netzwerkadressen',
     ip_obtained_connected: 'IP erhalten [Verbunden]',
+    free_memory: 'Freier Speicher', update_available: 'Update verfügbar',
+    no_update: 'Aktuell', websocket: 'WebSocket', realtime: 'Echtzeit',
+    diagnostics: 'Diagnose',
     coffee_machine: 'Kaffeemaschine',
     select_device: 'Wähle dein Sanremo YOU Gerät',
     card_name: 'Kartenname (optional)',
@@ -83,14 +109,21 @@ const _TRANSLATIONS = {
     steam: 'Vapeur', tank: 'Réservoir', infusion: 'Infusion',
     extraction: 'Extraction', daily: 'Aujourd\'hui', current: 'actuel',
     set: 'consigne', low: 'BAS', ok: 'OK',
+    brewing: 'Extraction', idle: 'Prêt',
+    profile_1: 'P1', profile_2: 'P2', profile_3: 'P3', manual: 'MAN',
+    stop: 'STOP', flow_rate: 'Débit', pressure: 'Pression',
+    weight: 'Poids', volume: 'Vol', target: 'cible',
+    scale: 'Balance',
     wifi_network_status: 'État du réseau Wi-Fi',
     programming: 'Programmation', counters: 'Compteurs',
     alarms: 'Alarmes', user_settings: 'Paramètres',
+    dose_settings: 'Réglages doses',
     time_slot: 'Créneau',
     coffee_counters: 'Compteurs de café',
     dose_1: 'Dose 1', dose_2: 'Dose 2', dose_3: 'Dose 3',
     continuous: 'Continu', paddle: 'Levier',
     steam_activation: 'Vapeur', tea: 'Thé',
+    total: 'Total',
     active_alarms: 'Alarmes actives',
     no_active_alarm: 'Aucune alarme active', no_active_warning: 'Aucun avertissement actif',
     coffee_boiler_temperature: 'Température chaudière café',
@@ -100,12 +133,17 @@ const _TRANSLATIONS = {
     coffee_boiler_settings: 'Réglages chaudière café',
     filter_holder_settings: 'Réglages porte-filtre',
     steam_boiler_settings: 'Réglages chaudière vapeur',
+    dose_1_setting: 'Dose 1', dose_2_setting: 'Dose 2', dose_3_setting: 'Dose 3',
+    tea_dose_setting: 'Dose thé',
     clock: 'Horloge', sync_clock: 'Synchroniser l\'horloge',
     cloud_connection_status: 'État connexion cloud',
     wifi_device_information: 'Informations appareil Wi-Fi',
     firmware_version: 'Version du firmware',
     network_addresses: 'Adresses réseau',
     ip_obtained_connected: 'IP obtenue [Connecté]',
+    free_memory: 'Mémoire libre', update_available: 'Mise à jour disponible',
+    no_update: 'À jour', websocket: 'WebSocket', realtime: 'Temps réel',
+    diagnostics: 'Diagnostics',
     coffee_machine: 'Machine à café',
     select_device: 'Sélectionnez votre Sanremo YOU',
     card_name: 'Nom de la carte (optionnel)',
@@ -117,14 +155,21 @@ const _TRANSLATIONS = {
     steam: 'Vapor', tank: 'Depósito', infusion: 'Infusión',
     extraction: 'Extracción', daily: 'Hoy', current: 'actual',
     set: 'objetivo', low: 'BAJO', ok: 'OK',
+    brewing: 'Extrayendo', idle: 'Listo',
+    profile_1: 'P1', profile_2: 'P2', profile_3: 'P3', manual: 'MAN',
+    stop: 'PARAR', flow_rate: 'Flujo', pressure: 'Presión',
+    weight: 'Peso', volume: 'Vol', target: 'objetivo',
+    scale: 'Balanza',
     wifi_network_status: 'Estado de red Wi-Fi',
     programming: 'Programación', counters: 'Contadores',
     alarms: 'Alarmas', user_settings: 'Ajustes',
+    dose_settings: 'Ajustes de dosis',
     time_slot: 'Franja',
     coffee_counters: 'Contadores de café',
     dose_1: 'Dosis 1', dose_2: 'Dosis 2', dose_3: 'Dosis 3',
     continuous: 'Continuo', paddle: 'Palanca',
     steam_activation: 'Vapor', tea: 'Té',
+    total: 'Total',
     active_alarms: 'Alarmas activas',
     no_active_alarm: 'Sin alarma activa', no_active_warning: 'Sin advertencia activa',
     coffee_boiler_temperature: 'Temperatura caldera café',
@@ -134,12 +179,17 @@ const _TRANSLATIONS = {
     coffee_boiler_settings: 'Ajustes caldera de café',
     filter_holder_settings: 'Ajustes portafiltro',
     steam_boiler_settings: 'Ajustes caldera de vapor',
+    dose_1_setting: 'Dosis 1', dose_2_setting: 'Dosis 2', dose_3_setting: 'Dosis 3',
+    tea_dose_setting: 'Dosis té',
     clock: 'Reloj', sync_clock: 'Sincronizar reloj',
     cloud_connection_status: 'Estado conexión cloud',
     wifi_device_information: 'Información del dispositivo Wi-Fi',
     firmware_version: 'Versión de firmware',
     network_addresses: 'Direcciones de red',
     ip_obtained_connected: 'IP obtenida [Conectado]',
+    free_memory: 'Memoria libre', update_available: 'Actualización disponible',
+    no_update: 'Actualizado', websocket: 'WebSocket', realtime: 'Tiempo real',
+    diagnostics: 'Diagnósticos',
     coffee_machine: 'Máquina de café',
     select_device: 'Selecciona tu Sanremo YOU',
     card_name: 'Nombre de la tarjeta (opcional)',
@@ -281,7 +331,6 @@ class SanremoYouCard extends HTMLElement {
     this._config = config;
     this._prefix = config.entity_prefix || 'sanremo_you';
     if (this._initialized) {
-      // Rebuild if config changes after initial setup
       this._buildDOM();
       this._attachListeners();
       this._update();
@@ -297,7 +346,6 @@ class SanremoYouCard extends HTMLElement {
     this._hass = hass;
     if (!this._config) return;
     if (!this._initialized) {
-      // First build: now we have both config and hass (with language)
       this._buildDOM();
       this._attachListeners();
       this._initialized = true;
@@ -313,7 +361,6 @@ class SanremoYouCard extends HTMLElement {
   getCardSize() { return 6; }
 
   static getStubConfig(hass) {
-    // Auto-detect the first Sanremo YOU device
     for (const entityId of Object.keys(hass?.states || {})) {
       const match = entityId.match(/^sensor\.(.+)_machine_status$/);
       if (match) return { entity_prefix: match[1] };
@@ -328,15 +375,8 @@ class SanremoYouCard extends HTMLElement {
   static getConfigForm() {
     return {
       schema: [
-        {
-          name: 'entity_prefix',
-          required: true,
-          selector: { text: {} },
-        },
-        {
-          name: 'name',
-          selector: { text: {} },
-        },
+        { name: 'entity_prefix', required: true, selector: { text: {} } },
+        { name: 'name', selector: { text: {} } },
       ],
       computeLabel: (schema) => {
         if (schema.name === 'entity_prefix') return 'Device prefix';
@@ -366,7 +406,7 @@ class SanremoYouCard extends HTMLElement {
     this._view = view;
     const views = ['main','settings','programming','counters','alarms',
                    'user-settings','setpoint-coffee','setpoint-group',
-                   'setpoint-steam','clock','wifi'];
+                   'setpoint-steam','clock','wifi','doses'];
     views.forEach(v => {
       const el = this._$(`view-${v}`);
       if (el) el.style.display = (v === view) ? 'block' : 'none';
@@ -395,6 +435,13 @@ class SanremoYouCard extends HTMLElement {
       bubbles: true, composed: true,
       detail: { entityId }
     }));
+  }
+
+  /* ── press a button entity ── */
+  _pressButton(suffix) {
+    this._hass?.callService('button', 'press', {
+      entity_id: `button.${this._prefix}_${suffix}`
+    });
   }
 
   /* ── update all views ── */
@@ -433,6 +480,8 @@ class SanremoYouCard extends HTMLElement {
       this._updateClock();
     } else if (v === 'wifi') {
       this._updateWifi();
+    } else if (v === 'doses') {
+      this._updateDoses();
     }
   }
 
@@ -442,8 +491,12 @@ class SanremoYouCard extends HTMLElement {
       nameEl.textContent = status?.attributes?.friendly_name?.replace(/ Machine Status$| Maschinenstatus$| État de la machine$| Estado de la máquina$/, '') || 'SANREMO-YOU';
     }
     const conn = this._$('connectivity');
-    conn.textContent = isAvail ? statusVal : this._t('disconnected');
     conn.className = 'connectivity ' + (isAvail ? 'connected' : 'disconnected');
+    this._$('conn-text').textContent = isAvail ? statusVal : this._t('disconnected');
+    const wsConn = this._b('websocket_connected');
+    const wsDot = this._$('ws-dot');
+    wsDot.className = 'ws-dot ' + (wsConn?.state === 'on' ? 'on' : 'off');
+    wsDot.title = 'WebSocket: ' + (wsConn?.state === 'on' ? this._t('connected') : this._t('disconnected'));
 
     this._$('power-toggle').className = 'toggle-track' + (isOn ? ' on' : '');
     this._$('ib-power').className = 'ib-icon' + (isOn ? ' active' : '');
@@ -453,6 +506,12 @@ class SanremoYouCard extends HTMLElement {
     this._$('ib-sched').className = 'ib-icon' + (sched?.state === 'on' ? ' active' : '');
     this._$('ib-warn').className = 'ib-icon' + (hasAlarm ? ' alarm' : hasWarn ? ' warning' : '');
 
+    /* scale icon */
+    const scaleConn = this._b('scale_connection');
+    const scaleOn = scaleConn?.state === 'on';
+    this._$('ib-scale').className = 'ib-icon' + (scaleOn ? ' active' : '');
+
+    /* steam gauge */
     const steam = this._s('steam_boiler_pressure');
     const steamSet = this._n('steam_pressure_setpoint');
     this._$('steam-val').textContent = steam ? parseFloat(steam.state).toFixed(2) : '--';
@@ -460,6 +519,7 @@ class SanremoYouCard extends HTMLElement {
     const steamUnit = this._$('steam-unit');
     if (steamUnit) steamUnit.textContent = steam?.attributes?.unit_of_measurement || 'bar';
 
+    /* temp gauge */
     const temp = this._s('group_temperature');
     const tempSet = this._n('group_temp_setpoint');
     this._$('temp-val').textContent = temp ? parseFloat(temp.state).toFixed(1) : '--';
@@ -467,6 +527,7 @@ class SanremoYouCard extends HTMLElement {
     const tempUnit = this._$('temp-unit');
     if (tempUnit) tempUnit.textContent = temp?.attributes?.unit_of_measurement || '°C';
 
+    /* tank gauge */
     const tank = this._b('water_tank');
     const tankLow = tank?.state === 'on';
     const bars = this._$('tank-bars');
@@ -484,10 +545,52 @@ class SanremoYouCard extends HTMLElement {
     tankSt.textContent = tankLow ? this._t('low') : this._t('ok');
     tankSt.className = 'g-status ' + (tankLow ? 'bad' : 'good');
 
+    /* extraction & daily */
     const ext = this._s('extraction_time');
     this._$('ext-val').textContent = ext ? parseFloat(ext.state).toFixed(1) + ' sec' : '-- sec';
     const daily = this._s('daily_shots');
     this._$('daily-val').textContent = daily ? String(daily.state).padStart(3, '0') + ` ${this._t('current')}` : '---';
+
+    /* ── brewing panel ── */
+    const groupStatus = this._s('group_status');
+    const gsLabel = groupStatus?.state ?? 'Idle';
+    const isBrewing = gsLabel !== 'Idle' && gsLabel !== 'unknown' && gsLabel !== 'unavailable';
+
+    const brewPanel = this._$('brew-panel');
+    const shotRow = this._$('shot-row');
+    if (brewPanel) brewPanel.style.display = isBrewing ? 'block' : 'none';
+    if (shotRow) shotRow.style.display = isBrewing ? 'none' : 'flex';
+
+    if (isBrewing) {
+      this._$('brew-status-label').textContent = gsLabel;
+      /* timer */
+      const brewTime = ext ? parseFloat(ext.state).toFixed(1) : '0.0';
+      this._$('brew-time').textContent = brewTime + 's';
+      /* flow rate */
+      const flow = this._s('realtime_flow');
+      this._$('brew-flow').textContent = flow ? parseFloat(flow.state).toFixed(1) : '0.0';
+      /* pump pressure */
+      const pump = this._s('pump_pressure');
+      const pumpUnit = pump?.attributes?.unit_of_measurement || 'bar';
+      this._$('brew-pressure').textContent = pump ? parseFloat(pump.state).toFixed(1) + ' ' + pumpUnit : '0.0';
+      /* volume */
+      const vol = this._s('counter_vol');
+      this._$('brew-volume').textContent = vol ? String(vol.state) : '0';
+      /* weight (only meaningful if scale connected) */
+      const weightCell = this._$('brew-weight-cell');
+      if (weightCell) {
+        if (scaleOn) {
+          weightCell.style.display = '';
+          const cupW = this._s('cup_weight');
+          const targetW = this._s('recipe_weight_setpoint');
+          const cw = cupW ? parseFloat(cupW.state).toFixed(1) : '0.0';
+          const tw = targetW ? parseFloat(targetW.state).toFixed(1) : '--';
+          this._$('brew-weight').textContent = `${cw} / ${tw} g`;
+        } else {
+          weightCell.style.display = 'none';
+        }
+      }
+    }
   }
 
   _updateSettings(statusVal, isAvail, isOn, isEco, sched, hasAlarm, hasWarn) {
@@ -518,6 +621,7 @@ class SanremoYouCard extends HTMLElement {
       ['cnt-paddle','counter_paddle', 5],
       ['cnt-steam', 'counter_steam', 5],
       ['cnt-tea',   'counter_tea', 5],
+      ['cnt-total', 'counter_total', 5],
     ];
     counters.forEach(([id, suffix, pad]) => {
       const e = this._s(suffix);
@@ -587,11 +691,17 @@ class SanremoYouCard extends HTMLElement {
     this._$('cloud-status').textContent = isAvail ? this._t('connected') : this._t('disconnected');
     this._$('cloud-status').style.color = isAvail ? 'var(--grn)' : 'var(--red)';
 
-    // Signal strength bars
-    // Signal value from API is a raw integer (0-100 typical range)
-    const sigVal = parseInt(signal?.state) || 0;
+    // RSSI in dBm: -30=excellent, -50=good, -60=fair, -70=weak, -80+=poor
+    const rssi = parseInt(signal?.state) || 0;
     const barCount = 5;
-    const filled = Math.min(barCount, Math.max(0, Math.ceil(sigVal / 20)));
+    let filled = 0;
+    if (rssi < 0) {
+      // dBm scale: map -90..-30 to 0..5 bars
+      filled = Math.min(barCount, Math.max(0, Math.round((rssi + 90) / 12)));
+    } else if (rssi > 0) {
+      // Legacy 0-4 bars fallback
+      filled = Math.min(barCount, rssi);
+    }
     const barsEl = this._$('wifi-signal-bars');
     barsEl.innerHTML = '';
     const container = document.createElement('div');
@@ -603,6 +713,52 @@ class SanremoYouCard extends HTMLElement {
       container.appendChild(bar);
     }
     barsEl.appendChild(container);
+
+    // RSSI numeric value
+    const rssiEl = this._$('wifi-rssi');
+    if (rssiEl) rssiEl.textContent = rssi < 0 ? rssi + ' dBm' : '';
+
+    // Diagnostics
+    const wsConn = this._b('websocket_connected');
+    const diagWs = this._$('diag-ws');
+    if (diagWs && wsConn) {
+      const on = wsConn.state === 'on';
+      diagWs.textContent = on ? this._t('connected') : this._t('disconnected');
+      diagWs.style.color = on ? 'var(--grn)' : 'var(--red)';
+    }
+
+    const mem = this._s('free_memory');
+    const diagMem = this._$('diag-mem');
+    if (diagMem) {
+      const bytes = parseInt(mem?.state);
+      if (!isNaN(bytes)) {
+        diagMem.textContent = bytes >= 1024 ? (bytes / 1024).toFixed(1) + ' KB' : bytes + ' B';
+      } else {
+        diagMem.textContent = '--';
+      }
+    }
+
+    const ota = this._b('ota_available');
+    const diagOta = this._$('diag-ota');
+    if (diagOta && ota) {
+      const avail = ota.state === 'on';
+      diagOta.textContent = avail ? this._t('update_available') : this._t('no_update');
+      diagOta.style.color = avail ? 'var(--org)' : 'var(--grn)';
+    }
+  }
+
+  _updateDoses() {
+    const doseMap = [
+      ['dose-val-1', 'dose_key1'],
+      ['dose-val-2', 'dose_key2'],
+      ['dose-val-3', 'dose_key3'],
+      ['dose-val-tea', 'dose_tea'],
+    ];
+    doseMap.forEach(([elId, suffix]) => {
+      const e = this._n(suffix);
+      const el = this._$(elId);
+      if (el) el.textContent = e ? String(Math.round(parseFloat(e.state))) : '--';
+    });
   }
 
   /* ── event listeners ── */
@@ -622,6 +778,14 @@ class SanremoYouCard extends HTMLElement {
     this._$('ib-power').addEventListener('click', () => this._fire(`switch.${p}_power`));
     this._$('ib-sched').addEventListener('click', () => this._fire(`switch.${p}_scheduler`));
     this._$('ib-warn').addEventListener('click', () => this._fire(`sensor.${p}_warnings`));
+    this._$('ib-scale').addEventListener('click', () => this._fire(`binary_sensor.${p}_scale_connection`));
+
+    /* shot control buttons */
+    this._$('btn-shot-p1').addEventListener('click', () => this._pressButton('start_shot_p1'));
+    this._$('btn-shot-p2').addEventListener('click', () => this._pressButton('start_shot_p2'));
+    this._$('btn-shot-p3').addEventListener('click', () => this._pressButton('start_shot_p3'));
+    this._$('btn-shot-man').addEventListener('click', () => this._pressButton('start_shot_manual'));
+    this._$('btn-brew-stop').addEventListener('click', () => this._pressButton('stop_shot'));
 
     /* gear → settings */
     this._root.querySelectorAll('.gear').forEach(g =>
@@ -640,11 +804,15 @@ class SanremoYouCard extends HTMLElement {
     this._$('nav-alarms').addEventListener('click', () => this._showView('alarms'));
     this._$('nav-user-settings').addEventListener('click', () => this._showView('user-settings'));
     this._$('nav-wifi').addEventListener('click', () => this._showView('wifi'));
+    this._$('nav-doses').addEventListener('click', () => this._showView('doses'));
 
     /* sub-view back buttons → settings */
     ['back-prog','back-cnt','back-alarms','back-us','back-wifi'].forEach(id =>
       this._$(id).addEventListener('click', () => this._showView('settings'))
     );
+
+    /* doses back → settings */
+    this._$('back-doses').addEventListener('click', () => this._showView('settings'));
 
     /* programming: scheduler toggle */
     this._$('sched-toggle').addEventListener('click', () => {
@@ -676,6 +844,16 @@ class SanremoYouCard extends HTMLElement {
     this._$('sp-group-plus').addEventListener('click', () => this._adjustSetpoint('group_temp_setpoint', 1));
     this._$('sp-steam-minus').addEventListener('click', () => this._adjustSetpoint('steam_pressure_setpoint', -1));
     this._$('sp-steam-plus').addEventListener('click', () => this._adjustSetpoint('steam_pressure_setpoint', 1));
+
+    /* dose +/- buttons */
+    this._$('dose-minus-1').addEventListener('click', () => this._adjustSetpoint('dose_key1', -1));
+    this._$('dose-plus-1').addEventListener('click', () => this._adjustSetpoint('dose_key1', 1));
+    this._$('dose-minus-2').addEventListener('click', () => this._adjustSetpoint('dose_key2', -1));
+    this._$('dose-plus-2').addEventListener('click', () => this._adjustSetpoint('dose_key2', 1));
+    this._$('dose-minus-3').addEventListener('click', () => this._adjustSetpoint('dose_key3', -1));
+    this._$('dose-plus-3').addEventListener('click', () => this._adjustSetpoint('dose_key3', 1));
+    this._$('dose-minus-tea').addEventListener('click', () => this._adjustSetpoint('dose_tea', -1));
+    this._$('dose-plus-tea').addEventListener('click', () => this._adjustSetpoint('dose_tea', 1));
 
     /* clock sync button */
     this._$('btn-sync-clock').addEventListener('click', () => {
@@ -713,9 +891,12 @@ class SanremoYouCard extends HTMLElement {
 .ib-icon.alarm{color:var(--red)}
 
 /* ── connectivity ── */
-.connectivity{margin:10px 12px;padding:7px 14px;border-radius:8px;font-size:12px;text-align:center;font-weight:600;letter-spacing:.5px;text-transform:uppercase}
+.connectivity{margin:10px 12px;padding:7px 14px;border-radius:8px;font-size:12px;text-align:center;font-weight:600;letter-spacing:.5px;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:8px}
 .connectivity.connected{background:rgba(76,175,80,.12);color:var(--grn);border:1px solid rgba(76,175,80,.25)}
 .connectivity.disconnected{background:rgba(244,67,54,.12);color:var(--red);border:1px solid rgba(244,67,54,.25)}
+.ws-dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0}
+.ws-dot.on{background:var(--blu);box-shadow:0 0 4px var(--blu)}
+.ws-dot.off{background:var(--t2)}
 
 /* ── gauges ── */
 .gauges{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:10px 12px 6px}
@@ -743,6 +924,23 @@ class SanremoYouCard extends HTMLElement {
 .ic-icon ha-icon{--mdc-icon-size:28px;color:var(--t2)}
 .ic-label{font-size:10px;color:var(--t2);text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:2px}
 .ic-value{font-size:20px;font-weight:700}
+
+/* ── brewing panel ── */
+.brew-panel{margin:8px 12px;padding:16px;background:linear-gradient(135deg,rgba(66,165,245,.1),rgba(66,165,245,.05));border:1px solid rgba(66,165,245,.3);border-radius:10px}
+.brew-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.brew-status-label{font-size:16px;font-weight:700;color:var(--blu);text-transform:uppercase;letter-spacing:1px}
+.brew-stop-btn{background:var(--red);color:#fff;border:none;border-radius:6px;padding:8px 20px;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;transition:opacity .2s}
+.brew-stop-btn:hover{opacity:.85}
+.brew-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:10px}
+.brew-cell{background:rgba(255,255,255,.04);border-radius:8px;padding:10px 8px;text-align:center}
+.brew-cell-label{font-size:9px;text-transform:uppercase;color:var(--t2);letter-spacing:1px;font-weight:600;margin-bottom:4px}
+.brew-cell-value{font-size:20px;font-weight:700;color:var(--t1)}
+
+/* ── shot control row ── */
+.shot-row{display:flex;gap:8px;padding:8px 12px;justify-content:center}
+.shot-btn{flex:1;max-width:80px;padding:12px 0;border:1px solid var(--sf2);border-radius:8px;background:var(--sf);color:var(--t1);font-size:14px;font-weight:700;cursor:pointer;text-align:center;letter-spacing:1px;transition:all .2s}
+.shot-btn:hover{background:var(--sf2);border-color:var(--t2)}
+.shot-btn:active{background:rgba(66,165,245,.15);border-color:var(--blu)}
 
 /* ── power / toggle ── */
 .power-row{display:flex;align-items:center;justify-content:center;gap:20px;padding:14px 16px 18px}
@@ -784,7 +982,7 @@ class SanremoYouCard extends HTMLElement {
 .alarm-line{font-size:14px;padding:6px 0;color:var(--t1)}
 .alarm-divider{border-top:1px solid var(--sf2);margin:2px 0}
 
-/* ── setpoint control ── */
+/* ── setpoint / dose control ── */
 .sp-panel{display:flex;background:var(--sf);margin:6px 0;padding:20px 16px;gap:16px;align-items:center;border-radius:0}
 .sp-icon{width:56px;height:56px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--sf2);flex-shrink:0}
 .sp-icon ha-icon{--mdc-icon-size:30px;color:var(--t2)}
@@ -817,8 +1015,14 @@ class SanremoYouCard extends HTMLElement {
 .signal-bar{width:6px;border-radius:1px;background:var(--sf2)}
 .signal-bar.filled{background:var(--grn)}
 
+/* ── dose setting row ── */
+.dose-panel{display:flex;background:var(--sf);margin:6px 0;padding:16px;gap:12px;align-items:center;border-radius:0}
+.dose-label{font-size:15px;font-weight:600;min-width:70px}
+.dose-controls{flex:1;display:flex;align-items:center;justify-content:flex-end;gap:4px}
+.dose-val{font-size:22px;font-weight:700;text-align:center;min-width:50px}
+
 /* ── responsive ── */
-@media(max-width:400px){.gauges{gap:4px}.gauge .g-value{font-size:20px}.gauge{padding:10px 4px 8px}.ic-value{font-size:16px}.sp-val{font-size:24px}}
+@media(max-width:400px){.gauges{gap:4px}.gauge .g-value{font-size:20px}.gauge{padding:10px 4px 8px}.ic-value{font-size:16px}.sp-val{font-size:24px}.brew-cell-value{font-size:16px}.shot-btn{padding:10px 0;font-size:12px}}
 </style>
 <div class="card">
 
@@ -836,8 +1040,50 @@ class SanremoYouCard extends HTMLElement {
       <div class="ib-icon" id="ib-power"><ha-icon icon="mdi:power"></ha-icon></div>
       <div class="ib-icon" id="ib-sched"><ha-icon icon="mdi:calendar-clock"></ha-icon></div>
       <div class="ib-icon" id="ib-warn"><ha-icon icon="mdi:alert-outline"></ha-icon></div>
+      <div class="ib-icon" id="ib-scale"><ha-icon icon="mdi:scale"></ha-icon></div>
     </div>
-    <div class="connectivity connected" id="connectivity">${this._t('connected')}</div>
+    <div class="connectivity connected" id="connectivity"><span id="conn-text">${this._t('connected')}</span><span class="ws-dot off" id="ws-dot" title="WebSocket"></span></div>
+
+    <!-- ── Brewing Panel (visible during shot) ── -->
+    <div id="brew-panel" style="display:none">
+      <div class="brew-panel">
+        <div class="brew-header">
+          <span class="brew-status-label" id="brew-status-label">--</span>
+          <button class="brew-stop-btn" id="btn-brew-stop">${this._t('stop')}</button>
+        </div>
+        <div class="brew-grid">
+          <div class="brew-cell">
+            <div class="brew-cell-label">${this._t('extraction')}</div>
+            <div class="brew-cell-value" id="brew-time">0.0s</div>
+          </div>
+          <div class="brew-cell">
+            <div class="brew-cell-label">${this._t('flow_rate')}</div>
+            <div class="brew-cell-value" id="brew-flow">0.0</div>
+          </div>
+          <div class="brew-cell">
+            <div class="brew-cell-label">${this._t('pressure')}</div>
+            <div class="brew-cell-value" id="brew-pressure">0.0</div>
+          </div>
+          <div class="brew-cell">
+            <div class="brew-cell-label">${this._t('volume')}</div>
+            <div class="brew-cell-value" id="brew-volume">0</div>
+          </div>
+          <div class="brew-cell" id="brew-weight-cell" style="display:none">
+            <div class="brew-cell-label">${this._t('weight')}</div>
+            <div class="brew-cell-value" id="brew-weight">0.0 g</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Shot Control (visible when idle) ── -->
+    <div class="shot-row" id="shot-row">
+      <button class="shot-btn" id="btn-shot-p1">${this._t('profile_1')}</button>
+      <button class="shot-btn" id="btn-shot-p2">${this._t('profile_2')}</button>
+      <button class="shot-btn" id="btn-shot-p3">${this._t('profile_3')}</button>
+      <button class="shot-btn" id="btn-shot-man">${this._t('manual')}</button>
+    </div>
+
     <div class="gauges">
       <div class="gauge" id="gauge-steam">
         <div class="g-icon"><ha-icon icon="mdi:gauge"></ha-icon></div>
@@ -914,6 +1160,10 @@ class SanremoYouCard extends HTMLElement {
         <ha-icon icon="mdi:account-outline"></ha-icon>
         <span class="tile-label">${this._t('user_settings')}</span>
       </div>
+      <div class="settings-tile" id="nav-doses">
+        <ha-icon icon="mdi:tune-vertical"></ha-icon>
+        <span class="tile-label">${this._t('dose_settings')}</span>
+      </div>
     </div>
   </div>
 
@@ -958,6 +1208,7 @@ class SanremoYouCard extends HTMLElement {
     <div class="counter-row"><span class="cr-label">${this._t('paddle')}</span><span class="cr-value" id="cnt-paddle">--</span></div>
     <div class="counter-row"><span class="cr-label">${this._t('steam_activation')}</span><span class="cr-value" id="cnt-steam">--</span></div>
     <div class="counter-row"><span class="cr-label">${this._t('tea')}</span><span class="cr-value" id="cnt-tea">--</span></div>
+    <div class="counter-row" style="border-top:2px solid var(--sf2)"><span class="cr-label" style="font-weight:800">${this._t('total')}</span><span class="cr-value" id="cnt-total" style="font-weight:800">--</span></div>
   </div>
 
   <!-- ═══ ALARMS ═══ -->
@@ -1015,7 +1266,7 @@ class SanremoYouCard extends HTMLElement {
     <div class="sp-panel">
       <div class="sp-icon"><ha-icon icon="mdi:coffee"></ha-icon></div>
       <div class="sp-controls">
-        <button class="sp-btn" id="sp-coffee-minus">−</button>
+        <button class="sp-btn" id="sp-coffee-minus">\u2212</button>
         <div class="sp-val" id="sp-coffee-val">--</div>
         <button class="sp-btn" id="sp-coffee-plus">+</button>
       </div>
@@ -1033,7 +1284,7 @@ class SanremoYouCard extends HTMLElement {
     <div class="sp-panel">
       <div class="sp-icon"><ha-icon icon="mdi:coffee"></ha-icon></div>
       <div class="sp-controls">
-        <button class="sp-btn" id="sp-group-minus">−</button>
+        <button class="sp-btn" id="sp-group-minus">\u2212</button>
         <div class="sp-val" id="sp-group-val">--</div>
         <button class="sp-btn" id="sp-group-plus">+</button>
       </div>
@@ -1051,7 +1302,7 @@ class SanremoYouCard extends HTMLElement {
     <div class="sp-panel">
       <div class="sp-icon"><ha-icon icon="mdi:gauge"></ha-icon></div>
       <div class="sp-controls">
-        <button class="sp-btn" id="sp-steam-minus">−</button>
+        <button class="sp-btn" id="sp-steam-minus">\u2212</button>
         <div class="sp-val" id="sp-steam-val">--</div>
         <button class="sp-btn" id="sp-steam-plus">+</button>
       </div>
@@ -1085,7 +1336,7 @@ class SanremoYouCard extends HTMLElement {
     <div class="net-section">
       <div class="net-row"><span class="net-label">SSID:</span><span class="net-value" id="wifi-ssid">--</span></div>
       <div class="net-row"><span class="net-label">Status:</span><span class="net-value" id="wifi-status">--</span></div>
-      <div class="net-row"><span class="net-label">Signal:</span><div class="net-value" id="wifi-signal-bars"></div></div>
+      <div class="net-row"><span class="net-label">Signal:</span><div class="net-value" style="display:flex;align-items:center;gap:8px"><div id="wifi-signal-bars"></div><span id="wifi-rssi" style="font-size:12px;color:var(--t2)"></span></div></div>
     </div>
 
     <div class="section-title">${this._t('cloud_connection_status')}</div>
@@ -1102,6 +1353,59 @@ class SanremoYouCard extends HTMLElement {
     <div class="section-title">${this._t('network_addresses')}</div>
     <div class="net-section">
       <div class="net-row"><span class="net-label">IP:</span><span class="net-value" id="wifi-ip">--</span></div>
+    </div>
+
+    <div class="section-title">${this._t('diagnostics')}</div>
+    <div class="net-section">
+      <div class="net-row"><span class="net-label">${this._t('websocket')}</span><span class="net-value" id="diag-ws">--</span></div>
+      <div class="net-row"><span class="net-label">${this._t('free_memory')}</span><span class="net-value" id="diag-mem">--</span></div>
+      <div class="net-row"><span class="net-label">OTA</span><span class="net-value" id="diag-ota">--</span></div>
+    </div>
+  </div>
+
+  <!-- ═══ DOSE SETTINGS ═══ -->
+  <div id="view-doses" style="display:none">
+    <div class="sub-hdr">
+      <div class="back" id="back-doses"><ha-icon icon="mdi:chevron-left"></ha-icon></div>
+      <div class="logo">YOU</div>
+      <div class="gear"><ha-icon icon="mdi:cog"></ha-icon></div>
+    </div>
+    <div class="section-title">${this._t('dose_settings')}</div>
+    <div class="dose-panel">
+      <ha-icon icon="mdi:numeric-1-box" style="--mdc-icon-size:28px;color:var(--t2)"></ha-icon>
+      <span class="dose-label">${this._t('dose_1_setting')}</span>
+      <div class="dose-controls">
+        <button class="sp-btn" id="dose-minus-1">\u2212</button>
+        <div class="dose-val" id="dose-val-1">--</div>
+        <button class="sp-btn" id="dose-plus-1">+</button>
+      </div>
+    </div>
+    <div class="dose-panel">
+      <ha-icon icon="mdi:numeric-2-box" style="--mdc-icon-size:28px;color:var(--t2)"></ha-icon>
+      <span class="dose-label">${this._t('dose_2_setting')}</span>
+      <div class="dose-controls">
+        <button class="sp-btn" id="dose-minus-2">\u2212</button>
+        <div class="dose-val" id="dose-val-2">--</div>
+        <button class="sp-btn" id="dose-plus-2">+</button>
+      </div>
+    </div>
+    <div class="dose-panel">
+      <ha-icon icon="mdi:numeric-3-box" style="--mdc-icon-size:28px;color:var(--t2)"></ha-icon>
+      <span class="dose-label">${this._t('dose_3_setting')}</span>
+      <div class="dose-controls">
+        <button class="sp-btn" id="dose-minus-3">\u2212</button>
+        <div class="dose-val" id="dose-val-3">--</div>
+        <button class="sp-btn" id="dose-plus-3">+</button>
+      </div>
+    </div>
+    <div class="dose-panel">
+      <ha-icon icon="mdi:tea" style="--mdc-icon-size:28px;color:var(--t2)"></ha-icon>
+      <span class="dose-label">${this._t('tea_dose_setting')}</span>
+      <div class="dose-controls">
+        <button class="sp-btn" id="dose-minus-tea">\u2212</button>
+        <div class="dose-val" id="dose-val-tea">--</div>
+        <button class="sp-btn" id="dose-plus-tea">+</button>
+      </div>
     </div>
   </div>
 

@@ -35,14 +35,27 @@
       "counter_paddle": { "name": "Paddle Counter" },
       "counter_steam": { "name": "Steam Activation Counter" },
       "counter_tea": { "name": "Tea Counter" },
+      "counter_total": { "name": "Total Shot Counter" },
+      "group_status": { "name": "Group Status" },
+      "status_phase": { "name": "Brewing Phase" },
+      "realtime_flow": { "name": "Flow Rate" },
+      "counter_vol": { "name": "Volume Counter" },
+      "set_press_paddle": { "name": "Paddle Pressure" },
+      "cup_weight": { "name": "Cup Weight" },
+      "recipe_weight_setpoint": { "name": "Recipe Weight Target" },
+      "scale_flow_rate": { "name": "Scale Flow Rate" },
       "wifi_ssid": { "name": "WiFi SSID" },
       "wifi_signal": { "name": "WiFi Signal" },
       "ip_address": { "name": "IP Address" },
       "mac_address": { "name": "MAC Address" },
-      "firmware_version": { "name": "Firmware Version" }
+      "firmware_version": { "name": "Firmware Version" },
+      "free_memory": { "name": "Free Memory" }
     },
     "binary_sensor": {
-      "water_tank": { "name": "Water Tank" }
+      "water_tank": { "name": "Water Tank" },
+      "scale_connection": { "name": "Scale Connected" },
+      "websocket_connected": { "name": "WebSocket Connected" },
+      "ota_available": { "name": "Firmware Update Available" }
     },
     "switch": {
       "power": { "name": "Power" },
@@ -63,7 +76,11 @@
     "number": {
       "coffee_boiler_setpoint": { "name": "Coffee Boiler Setpoint" },
       "group_temp_setpoint": { "name": "Group Temperature Setpoint" },
-      "steam_pressure_setpoint": { "name": "Steam Pressure Setpoint" }
+      "steam_pressure_setpoint": { "name": "Steam Pressure Setpoint" },
+      "dose_key1": { "name": "Dose 1 Setting" },
+      "dose_key2": { "name": "Dose 2 Setting" },
+      "dose_key3": { "name": "Dose 3 Setting" },
+      "dose_tea": { "name": "Tea Dose Setting" }
     },
     "time": {
       "scheduler_slot_1_start": { "name": "Slot 1 Start Time" },
@@ -80,7 +97,12 @@
       "scheduler_slot_6_stop": { "name": "Slot 6 Stop Time" }
     },
     "button": {
-      "sync_clock": { "name": "Sync Clock" }
+      "sync_clock": { "name": "Sync Clock" },
+      "start_shot_p1": { "name": "Start Profile 1" },
+      "start_shot_p2": { "name": "Start Profile 2" },
+      "start_shot_p3": { "name": "Start Profile 3" },
+      "start_shot_manual": { "name": "Start Manual" },
+      "stop_shot": { "name": "Stop Shot" }
     }
   }
 }

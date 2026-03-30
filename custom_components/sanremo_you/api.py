@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import json
 import logging
 from dataclasses import dataclass, field
 from typing import Any
@@ -10,7 +11,9 @@ from typing import Any
 import aiohttp
 
 from .const import (
+    ALARM_BITS,
     API_KEY_GET_DEVICE_INFO,
+    API_KEY_GET_LIGHTWEIGHT_STATUS,
     API_KEY_GET_SYSTEM_PARAMS,
     API_KEY_SAVE_SCHEDULER_DAY,
     API_KEY_SET_CLOCK,
@@ -18,15 +21,16 @@ from .const import (
     API_KEY_SET_SCHEDULER_STATUS,
     API_KEY_SET_VALUE,
     API_PATH,
-    ALARM_BITS,
+    API_PATH_ACTION_ON,
+    API_PATH_ACTION_PREFIX,
+    API_PATH_ACTION_STANDBY,
+    API_PATH_COUNTERS,
+    API_PATH_DOSES,
     DAY_ECO_BIT,
+    GROUP_STATUS_MAP,
     MACHINE_STATUS_MAP,
-    MACHINE_STATUS_OFF,
-    MACHINE_STATUS_ON,
     PARAM_COFFEE_BOILER_TEMP,
     PARAM_GROUP_TEMP,
-    PARAM_POWER_OFF,
-    PARAM_POWER_ON,
     PARAM_STEAM_BOILER_PRESSURE,
     SCHEDULER_IDX_DAYS_START,
     SCHEDULER_IDX_ENABLED,
@@ -36,6 +40,7 @@ from .const import (
     SETTINGS_IDX_GROUP_TEMP_SETPOINT,
     SETTINGS_IDX_PRESSURE_STEAM_SETPOINT,
     SETTINGS_IDX_STEAM_HEATER_SETPOINT,
+    SHOT_MODE_MAP,
     STATUS_IDX_ALARMS_CODE,
     STATUS_IDX_DEEP_SLEEP,
     STATUS_IDX_DOSE_TIME,
@@ -43,9 +48,13 @@ from .const import (
     STATUS_IDX_HEATER_TEMP,
     STATUS_IDX_LEVEL_SENSOR,
     STATUS_IDX_MACHINE_STATUS,
+    STATUS_IDX_COUNTER_VOL,
     STATUS_IDX_PUMP_PRESSURE,
+    STATUS_IDX_REALTIME_FLOW,
     STATUS_IDX_SERVICE_HEATER_PRESSURE,
     STATUS_IDX_SERVICE_HEATER_TEMP,
+    STATUS_IDX_SET_PRESS_PADDLE,
+    STATUS_IDX_STATUS_PHASE,
     STATUS_IDX_WARNINGS,
     WARNING_BITS,
 )
@@ -73,6 +82,20 @@ class SanremoYouData:
     level_sensor_status: int = 0
     deep_sleep_enabled: int = 0
 
+    # Real-time brewing data (from WebSocket)
+    group_status: int = 0
+    group_status_label: str = "Idle"
+    status_phase: int = 0
+    realtime_flow: float = 0.0
+    counter_vol: int = 0
+    set_press_paddle: float = 0.0
+
+    # Beanconqueror scale integration (from WebSocket)
+    app_scale_connection: int = 0
+    recipe_weight_setpoint: float = 0.0
+    cup_weight_from_scale: float = 0.0
+    realtime_flow_from_scale: float = 0.0
+
     # Counters
     daily_coffee: int = 0
     counter_dose_1: int = 0
@@ -82,12 +105,19 @@ class SanremoYouData:
     counter_paddle: int = 0
     counter_steam: int = 0
     counter_tea: int = 0
+    counter_total: int = 0
 
     # Settings (setpoints)
     setpoint_steam_heater: float = 0.0
     setpoint_group_temp: float = 0.0
     setpoint_filter_holder_temp: float = 0.0
     setpoint_pressure_steam: float = 0.0
+
+    # Dose settings
+    dose_key1: int = 0
+    dose_key2: int = 0
+    dose_key3: int = 0
+    dose_tea: int = 0
 
     # Device info
     machine_name: str = ""
@@ -99,6 +129,11 @@ class SanremoYouData:
 
     # Scheduler
     scheduler: SchedulerData | None = None
+
+    # Diagnostics (firmware 0.13+)
+    rssi: int = 0
+    free_memory: int = 0
+    ota_available: bool = False
 
     # Connectivity
     is_available: bool = False
@@ -201,8 +236,10 @@ class SanremoYouApi:
         """Return the host."""
         return self._host
 
+    # ── Low-level request helpers ──
+
     async def _post(self, data: dict[str, Any]) -> dict[str, Any]:
-        """Send a POST request to the machine."""
+        """Send a POST request to the legacy /ajax/post endpoint."""
         try:
             async with self._session.post(
                 self._base_url,
@@ -215,6 +252,22 @@ class SanremoYouApi:
             _LOGGER.debug("API request failed: %s", err)
             raise
 
+    async def _get(self, path: str) -> dict[str, Any] | None:
+        """Send a GET request to the new REST API."""
+        url = f"http://{self._host}{path}"
+        try:
+            async with self._session.get(
+                url,
+                timeout=aiohttp.ClientTimeout(total=10),
+            ) as response:
+                response.raise_for_status()
+                return await response.json(content_type=None)
+        except (aiohttp.ClientError, asyncio.TimeoutError) as err:
+            _LOGGER.debug("GET %s failed: %s", path, err)
+            raise
+
+    # ── Device info ──
+
     async def get_device_info(self) -> SanremoYouDeviceInfo:
         """Get device info (key 105)."""
         result = await self._post({"key": API_KEY_GET_DEVICE_INFO})
@@ -226,6 +279,17 @@ class SanremoYouApi:
         info.ssid = result.get("ssid", "")
         info.signal = result.get("signal", 0)
         return info
+
+    # ── Lightweight status (key 151 — RSSI, OTA, memory) ──
+
+    async def get_lightweight_status(self) -> dict[str, Any] | None:
+        """Get lightweight status (key 151) for RSSI and OTA flag."""
+        try:
+            return await self._post({"key": API_KEY_GET_LIGHTWEIGHT_STATUS})
+        except (aiohttp.ClientError, asyncio.TimeoutError):
+            return None
+
+    # ── Full system data (key 150 — used for HTTP polling fallback) ──
 
     async def get_system_data(self) -> SanremoYouData:
         """Get full system parameters (key 150)."""
@@ -250,10 +314,17 @@ class SanremoYouApi:
             data.heater_temperature = status[STATUS_IDX_HEATER_TEMP] / 10
             data.service_heater_temperature = status[STATUS_IDX_SERVICE_HEATER_TEMP]
             data.service_heater_pressure = status[STATUS_IDX_SERVICE_HEATER_PRESSURE] / 100
-            data.pump_pressure = status[STATUS_IDX_PUMP_PRESSURE] / 100
+            data.pump_pressure = status[STATUS_IDX_PUMP_PRESSURE] / 10
             data.dose_time = status[STATUS_IDX_DOSE_TIME] / 10
             data.level_sensor_status = status[STATUS_IDX_LEVEL_SENSOR]
             data.deep_sleep_enabled = status[STATUS_IDX_DEEP_SLEEP]
+
+        # Parse new status indices (firmware 0.13+)
+        if len(status) > STATUS_IDX_SET_PRESS_PADDLE:
+            data.status_phase = status[STATUS_IDX_STATUS_PHASE]
+            data.counter_vol = status[STATUS_IDX_COUNTER_VOL]
+            data.realtime_flow = status[STATUS_IDX_REALTIME_FLOW]
+            data.set_press_paddle = status[STATUS_IDX_SET_PRESS_PADDLE]
 
         # Parse settings array
         if len(settings) > SETTINGS_IDX_PRESSURE_STEAM_SETPOINT:
@@ -279,12 +350,166 @@ class SanremoYouApi:
             data.counter_steam = (counters[10] << 16) | counters[11]
             data.counter_tea = (counters[12] << 16) | counters[13]
 
+        # Parse dose array (new in firmware 0.12+)
+        dose = result.get("dose", [])
+        if len(dose) >= 4:
+            data.dose_key1 = dose[0]
+            data.dose_key2 = dose[1]
+            data.dose_key3 = dose[2]
+            data.dose_tea = dose[3]
+
         # Parse device info from this response
         data.machine_name = result.get("name", "SANREMO-YOU")
         data.wifi_signal = result.get("signal", 0)
         data.wifi_ssid = result.get("ssid", "")
+        data.free_memory = result.get("mem", 0)
 
         return data
+
+    # ── WebSocket message parsing ──
+
+    def parse_ws_message(self, raw: str, current_data: SanremoYouData | None = None) -> SanremoYouData | None:
+        """Parse a WebSocket broadcast message and merge into current data.
+
+        Returns updated data or None if the message is not a status broadcast.
+        """
+        try:
+            ws = json.loads(raw)
+        except json.JSONDecodeError:
+            return None
+
+        if "status" not in ws or "tempBoilerCoffe" not in ws:
+            return None  # Not a status broadcast
+
+        # Start from current data or empty
+        if current_data is not None:
+            import copy
+            data = copy.copy(current_data)
+        else:
+            data = SanremoYouData()
+
+        data.is_available = True
+
+        # Machine status
+        data.machine_status = ws.get("status", data.machine_status)
+        data.machine_status_label = MACHINE_STATUS_MAP.get(
+            data.machine_status, ws.get("description", f"Unknown ({data.machine_status})")
+        )
+
+        # Alarms & warnings
+        data.alarms_code = ws.get("alarms", data.alarms_code)
+        data.alarms_text = _decode_alarms(data.alarms_code, ALARM_BITS)
+        data.warnings_code = ws.get("warnings", data.warnings_code)
+        data.warnings_text = _decode_alarms(data.warnings_code, WARNING_BITS)
+
+        # Temperatures (WS provides pre-divided values in °C)
+        data.heater_temperature = ws.get("tempBoilerCoffe", data.heater_temperature)
+        # Note: group_temperature is NOT in WS — kept from HTTP poll
+
+        # Pressures
+        # pumpServicesPress: raw value, /100 for bar (steam boiler pressure)
+        if "pumpServicesPress" in ws:
+            data.service_heater_pressure = ws["pumpServicesPress"] / 100
+        # pumpPress: raw value, /10 for bar (pump pressure at group)
+        # Per Beanconqueror source code scaling
+        if "pumpPress" in ws:
+            data.pump_pressure = ws["pumpPress"] / 10
+
+        # Real-time brewing data
+        data.group_status = ws.get("groupStatus", data.group_status)
+        data.group_status_label = GROUP_STATUS_MAP.get(
+            data.group_status, f"Unknown ({data.group_status})"
+        )
+        data.status_phase = ws.get("statusPhase", data.status_phase)
+        data.realtime_flow = ws.get("realtimeFlow", data.realtime_flow)
+        data.counter_vol = ws.get("counterVol", data.counter_vol)
+        data.set_press_paddle = ws.get("setPressPaddle", data.set_press_paddle)
+
+        # Beanconqueror scale integration
+        data.app_scale_connection = ws.get("appScaleConnection", data.app_scale_connection)
+        data.recipe_weight_setpoint = ws.get("recipeWeightSetPoint", data.recipe_weight_setpoint)
+        data.cup_weight_from_scale = ws.get("cupWeightFromExtScale", data.cup_weight_from_scale)
+        data.realtime_flow_from_scale = ws.get("realTimeFlowCalcByTheScale", data.realtime_flow_from_scale)
+
+        # Doses from WS
+        doses = ws.get("doses", {})
+        if doses:
+            data.dose_key1 = doses.get("key1", data.dose_key1)
+            data.dose_key2 = doses.get("key2", data.dose_key2)
+            data.dose_key3 = doses.get("key3", data.dose_key3)
+            data.dose_tea = doses.get("keyTea", data.dose_tea)
+
+        return data
+
+    # ── New REST API: Power control ──
+
+    async def power_on(self) -> bool:
+        """Turn the machine on via /api/action/on."""
+        try:
+            result = await self._get(API_PATH_ACTION_ON)
+            return result.get("result", False) if result else False
+        except (aiohttp.ClientError, asyncio.TimeoutError):
+            return False
+
+    async def power_off(self) -> bool:
+        """Turn the machine to standby via /api/action/standby."""
+        try:
+            result = await self._get(API_PATH_ACTION_STANDBY)
+            return result.get("result", False) if result else False
+        except (aiohttp.ClientError, asyncio.TimeoutError):
+            return False
+
+    # ── New REST API: Shot control ──
+
+    async def start_shot(self, mode: int) -> bool:
+        """Start a shot. mode: 1=P1, 2=P2, 3=P3, 4=Manual."""
+        mode_str = SHOT_MODE_MAP.get(mode)
+        if not mode_str:
+            return False
+        try:
+            result = await self._get(f"{API_PATH_ACTION_PREFIX}/{mode_str}/start")
+            return result.get("result", False) if result else False
+        except (aiohttp.ClientError, asyncio.TimeoutError):
+            return False
+
+    async def stop_shot(self, mode: int) -> bool:
+        """Stop a shot. mode: 1=P1, 2=P2, 3=P3, 4=Manual."""
+        mode_str = SHOT_MODE_MAP.get(mode)
+        if not mode_str:
+            return False
+        try:
+            result = await self._get(f"{API_PATH_ACTION_PREFIX}/{mode_str}/stop")
+            return result.get("result", False) if result else False
+        except (aiohttp.ClientError, asyncio.TimeoutError):
+            return False
+
+    # ── New REST API: Doses ──
+
+    async def get_doses(self) -> dict[str, int] | None:
+        """Get dose settings via /api/doses."""
+        try:
+            return await self._get(API_PATH_DOSES)
+        except (aiohttp.ClientError, asyncio.TimeoutError):
+            return None
+
+    async def set_dose(self, key: str, value: int) -> bool:
+        """Set a dose value via /api/doses/{key}/{value}."""
+        try:
+            result = await self._get(f"{API_PATH_DOSES}/{key}/{value}")
+            return result.get("result", False) if result else False
+        except (aiohttp.ClientError, asyncio.TimeoutError):
+            return False
+
+    # ── New REST API: Counters ──
+
+    async def get_counters(self) -> dict[str, int] | None:
+        """Get counter values via /api/counters."""
+        try:
+            return await self._get(API_PATH_COUNTERS)
+        except (aiohttp.ClientError, asyncio.TimeoutError):
+            return None
+
+    # ── Legacy API: Setpoints (key 200) ──
 
     async def set_value(self, param_id: int, value: int) -> bool:
         """Set a parameter value (key 200)."""
@@ -298,14 +523,6 @@ class SanremoYouApi:
         except (aiohttp.ClientError, asyncio.TimeoutError):
             return False
 
-    async def power_on(self) -> bool:
-        """Turn the machine on."""
-        return await self.set_value(PARAM_POWER_ON, 1)
-
-    async def power_off(self) -> bool:
-        """Turn the machine off."""
-        return await self.set_value(PARAM_POWER_OFF, 1)
-
     async def set_coffee_boiler_temp(self, temp_celsius: float) -> bool:
         """Set coffee boiler temperature setpoint."""
         return await self.set_value(PARAM_COFFEE_BOILER_TEMP, int(temp_celsius * 10))
@@ -317,6 +534,8 @@ class SanremoYouApi:
     async def set_steam_pressure(self, pressure_bar: float) -> bool:
         """Set steam boiler pressure setpoint."""
         return await self.set_value(PARAM_STEAM_BOILER_PRESSURE, int(pressure_bar * 10))
+
+    # ── Legacy API: Scheduler ──
 
     async def set_scheduler_enabled(self, enabled: bool) -> bool:
         """Enable or disable the scheduler (key 252)."""
@@ -364,6 +583,8 @@ class SanremoYouApi:
         except (aiohttp.ClientError, asyncio.TimeoutError):
             return False
 
+    # ── Legacy API: Clock ──
+
     async def set_clock(self, hour: int, minute: int, day: int, month: int, year: int) -> bool:
         """Set the machine clock (key 249)."""
         try:
@@ -378,6 +599,8 @@ class SanremoYouApi:
             return result.get("result", False)
         except (aiohttp.ClientError, asyncio.TimeoutError):
             return False
+
+    # ── Connection test ──
 
     async def test_connection(self) -> bool:
         """Test if the machine is reachable."""

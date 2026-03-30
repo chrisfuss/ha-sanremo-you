@@ -12,7 +12,7 @@ from homeassistant.components.sensor import (
     SensorStateClass,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import UnitOfPressure, UnitOfTemperature, UnitOfTime
+from homeassistant.const import UnitOfMass, UnitOfPressure, UnitOfTemperature, UnitOfTime
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
@@ -155,6 +155,79 @@ SENSOR_DESCRIPTIONS: tuple[SanremoYouSensorDescription, ...] = (
         icon="mdi:tea",
         value_fn=lambda d: d.counter_tea,
     ),
+    # ── Total counter ──
+    SanremoYouSensorDescription(
+        key="counter_total",
+        translation_key="counter_total",
+        state_class=SensorStateClass.TOTAL_INCREASING,
+        icon="mdi:sigma",
+        value_fn=lambda d: d.counter_total,
+    ),
+    # ── Real-time brewing sensors (from WebSocket) ──
+    SanremoYouSensorDescription(
+        key="group_status",
+        translation_key="group_status",
+        icon="mdi:coffee-maker",
+        value_fn=lambda d: d.group_status_label,
+    ),
+    SanremoYouSensorDescription(
+        key="status_phase",
+        translation_key="status_phase",
+        icon="mdi:progress-clock",
+        value_fn=lambda d: d.status_phase,
+    ),
+    SanremoYouSensorDescription(
+        key="realtime_flow",
+        translation_key="realtime_flow",
+        state_class=SensorStateClass.MEASUREMENT,
+        icon="mdi:water-flow",
+        value_fn=lambda d: d.realtime_flow,
+    ),
+    SanremoYouSensorDescription(
+        key="counter_vol",
+        translation_key="counter_vol",
+        state_class=SensorStateClass.MEASUREMENT,
+        icon="mdi:counter",
+        value_fn=lambda d: d.counter_vol,
+    ),
+    SanremoYouSensorDescription(
+        key="set_press_paddle",
+        translation_key="set_press_paddle",
+        native_unit_of_measurement=UnitOfPressure.BAR,
+        device_class=SensorDeviceClass.PRESSURE,
+        state_class=SensorStateClass.MEASUREMENT,
+        suggested_display_precision=1,
+        icon="mdi:gauge",
+        value_fn=lambda d: d.set_press_paddle,
+    ),
+    # ── Beanconqueror scale sensors (from WebSocket) ──
+    SanremoYouSensorDescription(
+        key="cup_weight",
+        translation_key="cup_weight",
+        native_unit_of_measurement=UnitOfMass.GRAMS,
+        device_class=SensorDeviceClass.WEIGHT,
+        state_class=SensorStateClass.MEASUREMENT,
+        suggested_display_precision=1,
+        icon="mdi:scale",
+        value_fn=lambda d: d.cup_weight_from_scale,
+    ),
+    SanremoYouSensorDescription(
+        key="recipe_weight_setpoint",
+        translation_key="recipe_weight_setpoint",
+        native_unit_of_measurement=UnitOfMass.GRAMS,
+        device_class=SensorDeviceClass.WEIGHT,
+        state_class=SensorStateClass.MEASUREMENT,
+        suggested_display_precision=1,
+        icon="mdi:target",
+        value_fn=lambda d: d.recipe_weight_setpoint,
+    ),
+    SanremoYouSensorDescription(
+        key="scale_flow_rate",
+        translation_key="scale_flow_rate",
+        state_class=SensorStateClass.MEASUREMENT,
+        icon="mdi:waves",
+        value_fn=lambda d: d.realtime_flow_from_scale,
+    ),
     # ── Diagnostic (network/device) sensors ──
     SanremoYouSensorDescription(
         key="wifi_ssid",
@@ -171,7 +244,7 @@ SENSOR_DESCRIPTIONS: tuple[SanremoYouSensorDescription, ...] = (
         device_class=SensorDeviceClass.SIGNAL_STRENGTH,
         native_unit_of_measurement="dBm",
         entity_category=EntityCategory.DIAGNOSTIC,
-        value_fn=lambda d: d.wifi_signal if d.wifi_signal else None,
+        value_fn=lambda d: d.rssi if d.rssi else None,
     ),
     SanremoYouSensorDescription(
         key="ip_address",
@@ -193,6 +266,15 @@ SENSOR_DESCRIPTIONS: tuple[SanremoYouSensorDescription, ...] = (
         icon="mdi:chip",
         entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda d: d.firmware_version or None,
+    ),
+    SanremoYouSensorDescription(
+        key="free_memory",
+        translation_key="free_memory",
+        icon="mdi:memory",
+        state_class=SensorStateClass.MEASUREMENT,
+        native_unit_of_measurement="B",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda d: d.free_memory if d.free_memory else None,
     ),
 )
 

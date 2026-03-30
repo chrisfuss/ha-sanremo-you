@@ -35,14 +35,27 @@
       "counter_paddle": { "name": "Contador Palanca" },
       "counter_steam": { "name": "Contador Vapor" },
       "counter_tea": { "name": "Contador Té" },
+      "counter_total": { "name": "Contador Total" },
+      "group_status": { "name": "Estado del grupo" },
+      "status_phase": { "name": "Fase de extracción" },
+      "realtime_flow": { "name": "Caudal" },
+      "counter_vol": { "name": "Contador volumen" },
+      "set_press_paddle": { "name": "Presión palanca" },
+      "cup_weight": { "name": "Peso de la taza" },
+      "recipe_weight_setpoint": { "name": "Peso objetivo receta" },
+      "scale_flow_rate": { "name": "Caudal balanza" },
       "wifi_ssid": { "name": "SSID WiFi" },
       "wifi_signal": { "name": "Señal WiFi" },
       "ip_address": { "name": "Dirección IP" },
       "mac_address": { "name": "Dirección MAC" },
-      "firmware_version": { "name": "Versión de firmware" }
+      "firmware_version": { "name": "Versión de firmware" },
+      "free_memory": { "name": "Memoria libre" }
     },
     "binary_sensor": {
-      "water_tank": { "name": "Depósito de agua" }
+      "water_tank": { "name": "Depósito de agua" },
+      "scale_connection": { "name": "Balanza conectada" },
+      "websocket_connected": { "name": "WebSocket conectado" },
+      "ota_available": { "name": "Actualización disponible" }
     },
     "switch": {
       "power": { "name": "Encendido/Apagado" },
@@ -63,7 +76,11 @@
     "number": {
       "coffee_boiler_setpoint": { "name": "Consigna caldera de café" },
       "group_temp_setpoint": { "name": "Consigna temperatura del grupo" },
-      "steam_pressure_setpoint": { "name": "Consigna presión de vapor" }
+      "steam_pressure_setpoint": { "name": "Consigna presión de vapor" },
+      "dose_key1": { "name": "Ajuste Dosis 1" },
+      "dose_key2": { "name": "Ajuste Dosis 2" },
+      "dose_key3": { "name": "Ajuste Dosis 3" },
+      "dose_tea": { "name": "Ajuste Dosis Té" }
     },
     "time": {
       "scheduler_slot_1_start": { "name": "Franja 1 Hora de inicio" },
@@ -80,7 +97,12 @@
       "scheduler_slot_6_stop": { "name": "Franja 6 Hora de fin" }
     },
     "button": {
-      "sync_clock": { "name": "Sincronizar reloj" }
+      "sync_clock": { "name": "Sincronizar reloj" },
+      "start_shot_p1": { "name": "Iniciar Perfil 1" },
+      "start_shot_p2": { "name": "Iniciar Perfil 2" },
+      "start_shot_p3": { "name": "Iniciar Perfil 3" },
+      "start_shot_manual": { "name": "Iniciar Manual" },
+      "stop_shot": { "name": "Detener extracción" }
     }
   }
 }

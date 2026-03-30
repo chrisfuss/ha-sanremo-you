@@ -51,6 +51,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: SanremoYouConfigEntry) -
     coordinator = SanremoYouCoordinator(hass, api)
     await coordinator.async_config_entry_first_refresh()
 
+    # Start WebSocket listener for real-time data (port 81)
+    coordinator.start_websocket()
+    entry.async_on_unload(coordinator.stop_websocket)
+
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
